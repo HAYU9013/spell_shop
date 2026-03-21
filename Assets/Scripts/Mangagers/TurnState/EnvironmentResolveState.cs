@@ -45,6 +45,10 @@ public class EnvironmentResolveState : IGameState
     public IEnumerator Exit()
     {
         Debug.Log("[Phase 5] EnvironmentResolve — Exit");
+
+        // 將本回合結算後的環境狀態推入歷史 deque
+        EnvironmentManager.Instance?.RecordSnapshot();
+
         _turnManager.SetState(TurnManager.TurnPhase.CustomerJudge);
         yield break;
     }

@@ -66,6 +66,12 @@ public class EnvironmentManager : MonoBehaviour
     /// <summary>極端事件在同一回合的連鎖觸發最大次數（防無限迴圈）</summary>
     private const int MAX_CHAIN_ITERATIONS = 10;
 
+    /// <summary>環境歷史紀錄，頭（First）= 最新，尾（Last）= 最舊</summary>
+    private readonly LinkedList<EnvironmentData> _history = new LinkedList<EnvironmentData>();
+
+    /// <summary>歷史紀錄最大保留回合數（Inspector 可調）</summary>
+    [SerializeField] private int _maxHistorySize = 20;
+
     // =========================================================
     // 只讀屬性
     // =========================================================
@@ -87,6 +93,51 @@ public class EnvironmentManager : MonoBehaviour
     {
         return _env.Clone();
     }
+
+    // =========================================================
+    // 歷史紀錄（Deque：頭 = 最新，尾 = 最舊）
+    // =========================================================
+
+    /// <summary>目前儲存的歷史筆數</summary>
+    public int HistoryCount => _history.Count;
+
+    /// <summary>
+    /// 將當前環境快照推入歷史紀錄的頭部（最新）。
+    /// 超過 _maxHistorySize 時自動移除尾部（最舊）。
+    /// 建議在每回合 Phase 5 結算結束後呼叫。
+    /// </summary>
+    public void RecordSnapshot()
+    {
+        _history.AddFirst(_env.Clone());
+
+        while (_history.Count > _maxHistorySize)
+            _history.RemoveLast();
+    }
+
+    /// <summary>
+    /// 取得歷史紀錄中第 index 筆快照。
+    /// index 0 = 最新（本回合），index 1 = 上回合，以此類推。
+    /// 超出範圍回傳 null。
+    /// </summary>
+    public EnvironmentData GetHistoryAt(int index)
+    {
+        if (index < 0 || index >= _history.Count) return null;
+
+        var node = _history.First;
+        for (int i = 0; i < index; i++)
+            node = node.Next;
+
+        return node.Value;
+    }
+
+    /// <summary>最新一筆快照（等同 GetHistoryAt(0)），無紀錄時回傳 null</summary>
+    public EnvironmentData NewestHistory => _history.First?.Value;
+
+    /// <summary>最舊一筆快照，無紀錄時回傳 null</summary>
+    public EnvironmentData OldestHistory => _history.Last?.Value;
+
+    /// <summary>以唯讀方式存取完整歷史（頭 = 最新）</summary>
+    public IReadOnlyCollection<EnvironmentData> History => _history;
 
     // =========================================================
     // 效果套用
@@ -224,6 +275,7 @@ public class EnvironmentManager : MonoBehaviour
     public void ResetToInitial()
     {
         _env = new EnvironmentData();
+        _history.Clear();
         OnValueChanged?.Invoke(EnvAttribute.Brightness,  _env.brightness);
         OnValueChanged?.Invoke(EnvAttribute.Moisture,    _env.moisture);
         OnValueChanged?.Invoke(EnvAttribute.Temperature, _env.temperature);
@@ -267,6 +319,24 @@ public class EnvironmentManager : MonoBehaviour
         }
         Debug.Log("[EnvironmentManager] 強制設定亮度 = 0 以觸發黑暗降臨");
         ForceSetValue(EnvAttribute.Brightness, EnvironmentData.MIN_VALUE);
+    }
+
+    [ContextMenu("Debug_PrintHistory")]
+    private void Debug_PrintHistory()
+    {
+        if (!Application.isPlaying) { Debug.LogWarning("請在 Play Mode 下使用"); return; }
+        if (_history.Count == 0) { Debug.Log("[EnvironmentManager] 歷史紀錄為空"); return; }
+        int i = 0;
+        foreach (var snap in _history)
+            Debug.Log($"[History] [{i++}] {snap}");
+    }
+
+    [ContextMenu("Debug_RecordSnapshot")]
+    private void Debug_RecordSnapshot()
+    {
+        if (!Application.isPlaying) { Debug.LogWarning("請在 Play Mode 下使用"); return; }
+        RecordSnapshot();
+        Debug.Log($"[EnvironmentManager] 手動記錄快照，目前歷史 {HistoryCount} 筆");
     }
 
     [ContextMenu("Debug_ScoreMinus10")]
