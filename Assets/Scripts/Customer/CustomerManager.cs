@@ -146,9 +146,16 @@ public class CustomerManager : MonoBehaviour
 
         if (satisfied)
         {
-            Debug.Log($"[CustomerManager] {_currentCustomer.Data.customerName} 需求滿足！業績 +{_currentCustomer.Data.scoreReward}");
-            EnvironmentManager.Instance?.ModifyScore(_currentCustomer.Data.scoreReward);
-            OnCustomerSatisfied?.Invoke(_currentCustomer);
+            var customer = _currentCustomer;
+
+            // 業績獎勵（固定值）
+            Debug.Log($"[CustomerManager] {customer.Data.customerName} 需求滿足！業績 +{customer.Data.scoreReward}");
+            EnvironmentManager.Instance?.ModifyScore(customer.Data.scoreReward);
+
+            // 符文 / 卷軸等額外獎勵
+            RewardManager.Grant(customer.Data.bonusRewards, customer.Data.customerName);
+
+            OnCustomerSatisfied?.Invoke(customer);
             _currentCustomer = null;
         }
 

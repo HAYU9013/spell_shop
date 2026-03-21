@@ -33,6 +33,12 @@ public class RelicTickResult
 
     /// <summary>true = 強制設定；false = delta</summary>
     public bool ShockIsForceSet;
+
+    /// <summary>
+    /// 滿意時的額外獎勵清單（由 RelicManager 轉交 RewardManager 處理）。
+    /// 不滿意時此欄位為 null。
+    /// </summary>
+    public System.Collections.Generic.List<RewardEntry> SatisfiedRewards;
 }
 
 // =========================================================
@@ -89,10 +95,11 @@ public class RelicInstance
             UnsatisfiedCount = 0;
             return new RelicTickResult
             {
-                IsSatisfied        = true,
-                EnvEffects         = Data.satisfiedEnvEffects,
-                ScoreChange        = Data.satisfiedScoreChange,
-                PunishmentTriggered = false
+                IsSatisfied         = true,
+                EnvEffects          = Data.satisfiedEnvEffects,
+                ScoreChange         = Data.satisfiedScoreChange,
+                PunishmentTriggered = false,
+                SatisfiedRewards    = Data.satisfiedRewards
             };
         }
         else

@@ -122,6 +122,10 @@ public class RelicManager : MonoBehaviour
             if (result.ScoreChange != 0)
                 env.ModifyScore(result.ScoreChange);
 
+            // 符文 / 卷軸額外獎勵（僅滿意時）
+            if (result.IsSatisfied && result.SatisfiedRewards != null && result.SatisfiedRewards.Count > 0)
+                RewardManager.Grant(result.SatisfiedRewards, relic.Data.relicName);
+
             // 通知計數變化
             OnRelicCountChanged?.Invoke(relic);
 

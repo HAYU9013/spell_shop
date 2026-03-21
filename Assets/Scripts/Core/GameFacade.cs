@@ -67,6 +67,12 @@ public class GameFacade : MonoBehaviour
     /// <summary>關卡通關（關卡模式：顧客隊列清空）</summary>
     public event Action OnLevelClear;
 
+    /// <summary>
+    /// 獎勵實際發放時觸發（顧客滿足 / 遺物每回合滿意）。
+    /// UI 可用於顯示「獲得 水珠 ×2」等提示。
+    /// </summary>
+    public event Action<RewardResult> OnRewardGranted;
+
     // =========================================================
     // 內部狀態
     // =========================================================
@@ -291,6 +297,8 @@ public class GameFacade : MonoBehaviour
             GameManager.Instance.OnGameOver   += HandleGameOver;
             GameManager.Instance.OnLevelClear += HandleLevelClear;
         }
+
+        RewardManager.OnRewardGranted += HandleRewardGranted;
     }
 
     private void UnsubscribeAll()
@@ -329,6 +337,8 @@ public class GameFacade : MonoBehaviour
             GameManager.Instance.OnGameOver   -= HandleGameOver;
             GameManager.Instance.OnLevelClear -= HandleLevelClear;
         }
+
+        RewardManager.OnRewardGranted -= HandleRewardGranted;
     }
 
     // =========================================================
@@ -410,6 +420,11 @@ public class GameFacade : MonoBehaviour
     private void HandleLevelClear()
     {
         OnLevelClear?.Invoke();
+    }
+
+    private void HandleRewardGranted(RewardResult result)
+    {
+        OnRewardGranted?.Invoke(result);
     }
 
     // =========================================================

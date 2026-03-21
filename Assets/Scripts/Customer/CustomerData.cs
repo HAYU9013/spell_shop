@@ -50,6 +50,6 @@ public class CustomerData : ScriptableObject
     [Tooltip("耐心耗盡時的業績懲罰（填正值，套用時為 -N）")]
     public int scorePenalty = 5;
 
-    [Tooltip("獎勵類型（目前僅實作 Score，其餘為後續擴充）")]
-    public RewardType rewardType = RewardType.Score;
+    [Tooltip("符文 / 卷軸等額外獎勵（可設多筆，每筆隨機從池中選取）")]
+    public List<RewardEntry> bonusRewards = new List<RewardEntry>();
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 // =========================================================
@@ -112,6 +113,9 @@ public class RelicData : ScriptableObject
 
     [Tooltip("業績變化（正=加，負=扣）")]
     public int satisfiedScoreChange = 0;
+
+    [Tooltip("符文 / 卷軸等額外獎勵（每回合滿意時給予，注意平衡性）")]
+    public List<RewardEntry> satisfiedRewards = new List<RewardEntry>();
 
     // =========================================================
     // 不滿意效果（每回合，條件不成立時套用）
