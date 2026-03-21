@@ -188,10 +188,25 @@ public class WorkbenchManager : MonoBehaviour
         var record = new SubmitRecord(turnNumber, _selectedScroll, runeData);
         _history.Insert(0, record);
 
+        // 檢查是否有「丟棄效果」符文（discardOtherRunes = true）
+        bool hasDiscardEffect = false;
+        foreach (var rune in _slots)
+        {
+            if (rune.Data.discardOtherRunes) { hasDiscardEffect = true; break; }
+        }
+
         // 處理符文後續
         foreach (var rune in _slots)
         {
-            if (rune.Data.runeType == RuneType.Cycle)
+            bool isDiscardRune = rune.Data.discardOtherRunes;
+
+            // 非「丟棄效果」符文 + 同卷軸有丟棄效果符文 → 強制永久移除
+            if (hasDiscardEffect && !isDiscardRune)
+            {
+                DeckManager.Instance.ExhaustRune(rune);
+                Debug.Log($"[WorkbenchManager] {rune.Data.runeName} 因丟棄效果被永久移除");
+            }
+            else if (rune.Data.runeType == RuneType.Cycle)
                 DeckManager.Instance.DiscardRune(rune);
             else
                 DeckManager.Instance.ExhaustRune(rune);
