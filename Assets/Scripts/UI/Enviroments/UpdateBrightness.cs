@@ -29,9 +29,10 @@ public class UpdateBrightness : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_subscribed && GameFacade.Instance != null)
+        if (_subscribed)
         {
-            GameFacade.Instance.OnEnvironmentChanged -= HandleEnvironmentChanged;
+            if (GameFacade.Instance != null)
+                GameFacade.Instance.OnEnvironmentChanged -= HandleEnvironmentChanged;
             _subscribed = false;
         }
     }

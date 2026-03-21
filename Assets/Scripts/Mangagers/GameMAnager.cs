@@ -125,9 +125,17 @@ public class GameManager : MonoBehaviour
         SubscribeEvents();
 
         // 啟動回合
-        _turnManager?.StartGame();
+        if (_turnManager != null)
+        {
+            _turnManager.StartGame();
+            Debug.Log("[GameManager] TurnManager.StartGame() 已呼叫");
+        }
+        else
+        {
+            Debug.LogError("[GameManager] _turnManager 為 null！請在 Inspector 指定 TurnManager");
+        }
 
-        Debug.Log($"[GameManager] 遊戲開始（{mode}）");
+        Debug.Log($"[GameManager] 遊戲開始（{mode}），CustomerManager.Instance={(CustomerManager.Instance != null ? "OK" : "null")}，Queue/Pool 有無資料＝{(mode == GameMode.Level ? _levelQueue?.Count.ToString() : _endlessPool?.Count.ToString())} 筆");
     }
 
     // =========================================================

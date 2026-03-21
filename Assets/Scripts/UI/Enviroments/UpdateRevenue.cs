@@ -29,9 +29,10 @@ public class UpdateRevenue : MonoBehaviour
 
     private void OnDisable()
     {
-        if (_subscribed && GameFacade.Instance != null)
+        if (_subscribed)
         {
-            GameFacade.Instance.OnScoreChanged -= HandleScoreChanged;
+            if (GameFacade.Instance != null)
+                GameFacade.Instance.OnScoreChanged -= HandleScoreChanged;
             _subscribed = false;
         }
     }

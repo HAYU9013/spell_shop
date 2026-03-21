@@ -310,6 +310,11 @@ public class GameFacade : MonoBehaviour
             CustomerManager.Instance.OnCustomerArrived  += HandleCustomerArrived;
             CustomerManager.Instance.OnCustomerSatisfied += HandleCustomerDeparted;
             CustomerManager.Instance.OnCustomerLeft     += HandleCustomerDeparted;
+            Debug.Log("[GameFacade] 已訂閱 CustomerManager 事件");
+        }
+        else
+        {
+            Debug.LogWarning("[GameFacade] SubscribeAll：CustomerManager.Instance 為 null，未訂閱顧客事件");
         }
 
         if (RelicManager.Instance != null)
@@ -412,6 +417,7 @@ public class GameFacade : MonoBehaviour
 
     private void HandleCustomerArrived(CustomerInstance customer)
     {
+        Debug.Log($"[GameFacade] HandleCustomerArrived → {customer?.Data?.customerName}，subscribers={OnCustomerChanged?.GetInvocationList()?.Length ?? 0}");
         OnCustomerChanged?.Invoke(BuildCustomerSnapshot(customer));
     }
 

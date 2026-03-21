@@ -22,10 +22,12 @@ public class CustomerArrivalState : IGameState
 
     public IEnumerator Execute()
     {
-        Debug.Log("[Phase 1] CustomerArrival — Execute");
+        Debug.Log($"[Phase 1] CustomerArrival — Execute，HasCustomer={CustomerManager.Instance?.HasCustomer}，CustomerManager={(CustomerManager.Instance != null ? "OK" : "null")}");
 
         if (CustomerManager.Instance != null && !CustomerManager.Instance.HasCustomer)
             CustomerManager.Instance.SpawnNextCustomer();
+        else if (CustomerManager.Instance != null && CustomerManager.Instance.HasCustomer)
+            Debug.Log("[Phase 1] 已有顧客，跳過 SpawnNextCustomer");
 
         yield break;
     }
