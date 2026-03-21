@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: BrightHead
   m_EditorClassIdentifier: 
   customerName: "\u5149\u982D"
-  flavorText: "\u66971"
+  flavorText: "\u66974"
   portrait: {fileID: 21300000, guid: aa925edbfe657ad45878f23253d22015, type: 3}
   requirements:
-  - type: 1
+  - type: 0
     attribute: 0
-    compareOp: 1
-    targetValue: 1
+    compareOp: 2
+    targetValue: 4
     targetValueMax: 0
     requiredDelta: 1
     stabilityTurns: 0

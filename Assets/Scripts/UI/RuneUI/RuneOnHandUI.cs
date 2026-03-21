@@ -69,10 +69,13 @@ public class RuneOnHandUI : MonoBehaviour
 
     private void Apply(IReadOnlyList<RuneData> hand)
     {
-        // 清除舊卡
+        // 清除舊卡；RuneCardUI.OnDestroy 會自動取消 OnSelectionChanged 訂閱
         foreach (var card in _cards)
             if (card != null) Destroy(card);
         _cards.Clear();
+
+        // 手牌索引全部重新分配，舊的 SelectedIndex 已無意義，必須清除
+        HandSelectionState.Deselect();
 
         if (hand == null || hand.Count == 0) return;
 
@@ -82,12 +85,15 @@ public class RuneOnHandUI : MonoBehaviour
             return;
         }
 
-        // 生成新卡
+        // 依手牌順序生成卡片，index 與 HandSelectionState 的 SelectedIndex 對應
         for (int i = 0; i < hand.Count; i++)
         {
             var go = Instantiate(runePrefab, transform);
             _cards.Add(go);
             FillCard(go, hand[i]);
+
+            // 附加點擊互動元件（掛在 Icon 子物件上，因其有 Image + RaycastTarget）
+            SetupClickHandler(go, i, hand[i]);
         }
 
         LayoutCards();
@@ -108,7 +114,11 @@ public class RuneOnHandUI : MonoBehaviour
                 ? 0f
                 : -_spreadWidth / 2f + i * (_spreadWidth / (count - 1));
 
-            _cards[i].transform.localPosition = new Vector3(x, 0f, 0f);
+            var rt = _cards[i].GetComponent<RectTransform>();
+            if (rt != null)
+                rt.anchoredPosition = new Vector2(x, 0f);
+            else
+                _cards[i].transform.localPosition = new Vector3(x, 0f, 0f);
 
             // 右側卡排在前面（sibling index 越大越晚渲染 = 在上層）
             _cards[i].transform.SetSiblingIndex(i);
@@ -148,5 +158,29 @@ public class RuneOnHandUI : MonoBehaviour
         }
         var img = t.GetComponent<Image>();
         if (img != null) img.sprite = sprite;
+    }
+
+    // =========================================================
+    // 點擊互動設定
+    // =========================================================
+
+    private void SetupClickHandler(GameObject card, int index, RuneData rune)
+    {
+        // Rune prefab 根物件是 Transform（沒有 Image），EventSystem 無法對它射線偵測。
+        // Icon 子物件有 Image + RaycastTarget = true，掛在這裡才能接收點擊。
+        // RuneCardUI 內部保有 card.transform 參照，動畫作用於整張卡而非只有 Icon。
+        var iconTransform = card.transform.Find("Icon");
+        if (iconTransform == null)
+        {
+            Debug.LogWarning("[RuneOnHandUI] 找不到 Icon 子物件，無法設定點擊互動");
+            return;
+        }
+
+        // GetComponent 防止重複 AddComponent（理論上新 Instantiate 不會有，保險起見）
+        var cardUI = iconTransform.GetComponent<RuneCardUI>();
+        if (cardUI == null)
+            cardUI = iconTransform.gameObject.AddComponent<RuneCardUI>();
+
+        cardUI.Setup(index, rune, card.transform);
     }
 }

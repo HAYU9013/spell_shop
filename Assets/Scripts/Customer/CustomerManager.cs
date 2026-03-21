@@ -157,6 +157,8 @@ public class CustomerManager : MonoBehaviour
 
             OnCustomerSatisfied?.Invoke(customer);
             _currentCustomer = null;
+
+            CheckQueueEmptyAfterDismiss();
         }
 
         return satisfied;
@@ -183,6 +185,8 @@ public class CustomerManager : MonoBehaviour
             EnvironmentManager.Instance?.ModifyScore(-_currentCustomer.Data.scorePenalty);
             OnCustomerLeft?.Invoke(_currentCustomer);
             _currentCustomer = null;
+
+            CheckQueueEmptyAfterDismiss();
         }
     }
 
@@ -209,6 +213,18 @@ public class CustomerManager : MonoBehaviour
     // =========================================================
     // 私有工具
     // =========================================================
+
+    /// <summary>
+    /// 顧客離開後立即檢查：關卡模式且隊列已空 → 觸發 OnQueueEmpty。
+    /// </summary>
+    private void CheckQueueEmptyAfterDismiss()
+    {
+        if (!_isEndlessMode && _queue.Count == 0)
+        {
+            Debug.Log("[CustomerManager] 最後一位顧客離開，隊列清空 → 關卡通關");
+            OnQueueEmpty?.Invoke();
+        }
+    }
 
     private CustomerData GetNextCustomerData()
     {

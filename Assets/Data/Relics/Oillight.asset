@@ -17,9 +17,9 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 4b72839572ba45a4e8a710805f5ff095, type: 3}
   displayOrder: 0
   satisfiedCondition:
-    attribute: 0
+    attribute: 2
     compareOp: 0
-    targetValue: 0
+    targetValue: 2
     rangeMin: 0
     rangeMax: 0
   satisfiedEnvEffects: []
@@ -27,8 +27,8 @@ MonoBehaviour:
   satisfiedRewards: []
   unsatisfiedEnvEffects: []
   unsatisfiedScoreChange: 0
-  unsatisfiedLimit: 3
+  unsatisfiedLimit: 2
   punishmentType: 0
   shockAttribute: 0
-  shockValue: -5
+  shockValue: 8
   shockIsForceSet: 0

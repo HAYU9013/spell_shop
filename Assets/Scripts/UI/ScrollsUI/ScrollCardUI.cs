@@ -69,6 +69,7 @@ public class ScrollCardUI : MonoBehaviour, IPointerClickHandler
         if (GameFacade.Instance.Workbench.SelectedScroll == _data) return;
 
         GameFacade.Instance.SelectScroll(_data);
+        HandSelectionState.Deselect();
         // 高亮由 HandleWorkbenchChanged 事件驅動更新，無需手動呼叫
     }
 

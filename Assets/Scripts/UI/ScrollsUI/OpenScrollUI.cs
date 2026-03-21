@@ -202,7 +202,11 @@ public class OpenScrollUI : MonoBehaviour
                 ? 0f
                 : -_spreadWidth / 2f + i * (_spreadWidth / (count - 1));
 
-            _slots[i].transform.localPosition = new Vector3(x, 0f, 0f);
+            var rt = _slots[i].GetComponent<RectTransform>();
+            if (rt != null)
+                rt.anchoredPosition = new Vector2(x, 0f);
+            else
+                _slots[i].transform.localPosition = new Vector3(x, 0f, 0f);
             _slots[i].transform.SetSiblingIndex(i);
         }
     }

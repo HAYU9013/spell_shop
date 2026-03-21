@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a2318242fc91484abca708cb87dbd7a, type: 3}
   m_Name: ThreeSlot
   m_EditorClassIdentifier: 
-  scrollName: OneSlot
-  description: "\u4E00\u500B\u7E2B\u9699"
+  scrollName: ThreeSlot
+  description: "\u4E09\u500B\u7E2B\u9699"
   icon: {fileID: 21300000, guid: 5dff5ded945b4ea4abb5f1c8714dd654, type: 3}
-  slotCount: 1
+  slotCount: 3
   modifierType: 0
   multiplier: 1
   tagFilter: 0

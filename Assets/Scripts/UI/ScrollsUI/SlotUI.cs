@@ -12,8 +12,15 @@ using UnityEngine.UI;
 ///   - 有符文：顯示 runeView（符文圖示 + 名稱）
 ///
 /// 點擊行為：
-///   - 空槽  → 無動作（符文放入由手牌卡片點擊觸發）
-///   - 有符文 → RemoveRuneAt(slotIndex)，將符文退回手牌
+///   - 有符文的槽位 → RemoveRuneAt(slotIndex)，將符文退回手牌
+///   - 空槽 + 玩家已選中手牌符文 → PlaceRune()，放入選中的符文
+///   - 空槽 + 無選中 → 無動作
+///
+/// UI 刷新流程（不直接更新，而是等事件）：
+///   PlaceRune / RemoveRuneAt
+///     → WorkbenchManager.OnWorkbenchChanged
+///       → OpenScrollUI.Apply()
+///         → SlotUI.Refresh()  ← 在這裡才更新顯示
 ///
 /// 由 OpenScrollUI 呼叫 Setup() 和 Refresh()。
 /// </summary>
@@ -87,6 +94,8 @@ public class SlotUI : MonoBehaviour, IPointerClickHandler
     {
         if (GameFacade.Instance == null) return;
 
+        // 從 Workbench 快照判斷此槽位目前是否有符文
+        // （不用 _currentRune，因為快照是即時資料，_currentRune 可能落後一幀）
         var wb = GameFacade.Instance.Workbench;
         bool hasRune = wb.PlacedRunes != null
                     && _slotIndex < wb.PlacedRunes.Length
@@ -94,10 +103,19 @@ public class SlotUI : MonoBehaviour, IPointerClickHandler
 
         if (hasRune)
         {
-            // 有符文 → 退回手牌（Refresh 由 OnWorkbenchChanged 事件觸發）
+            // 點擊有符文的槽位 → 退回手牌，同時清除選中
+            // UI 刷新由 WorkbenchManager 觸發 OnWorkbenchChanged → OpenScrollUI → Refresh() 驅動
             GameFacade.Instance.RemoveRuneAt(_slotIndex);
+            HandSelectionState.Deselect();
         }
-        // 空槽 → 不處理，等待手牌符文卡片點擊後放入
+        else if (HandSelectionState.HasSelection)
+        {
+            // 有選中符文 + 空槽 → 嘗試放入
+            // PlaceRune 回傳 false 表示槽位已全滿或符文不在手牌（理論上不會發生）
+            bool ok = GameFacade.Instance.PlaceRune(HandSelectionState.SelectedRuneData);
+            if (ok) HandSelectionState.Deselect();
+        }
+        // 空槽 + 無選中 → 玩家尚未選符文，無操作
     }
 
     // =========================================================
