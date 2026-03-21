@@ -1,0 +1,430 @@
+graph TD
+
+  %% ═════════════════════════════════════════
+  %% COLOR LEGEND
+  %% 🔴 ctrl   — Game Control  (GameManager, TurnManager)
+  %% 🟠 state  — Turn States   (IGameState 8 phases)
+  %% 🟡 env    — Environment   (EnvironmentManager, EnvironmentData, ExtremeEventHandler)
+  %% 🟢 card   — Card / Rune   (DeckManager, WorkbenchManager)
+  %% 🩵 scroll — Scroll        (ScrollInventory, ScrollProcessor)
+  %% 🟣 cust   — Customer      (CustomerManager, CustomerInstance, Requirements)
+  %% 🟤 relic  — Relic         (RelicManager, RelicInstance)
+  %% ⚫ evt    — Events        (C# Action / async callbacks)
+  %% ═════════════════════════════════════════
+
+  %% ─────────────────────────────────────────
+  %% GameManager  🔴
+  %% ─────────────────────────────────────────
+  subgraph GM[GameManager]
+    GM_Start["StartGame()"]
+    GM_Check["CheckScoreGameOver()"]
+    GM_End["EndGame()"]
+    GM_Clear["TriggerLevelClear()"]
+    GM_Punish["HandleRelicPunishment()"]
+    GM_Sub["SubscribeEvents()"]
+    GM_Unsub["UnsubscribeEvents()"]
+  end
+
+  %% ─────────────────────────────────────────
+  %% TurnManager  🔴
+  %% ─────────────────────────────────────────
+  subgraph TM[TurnManager]
+    TM_Start["StartGame()"]
+    TM_Next["StartNextTurn()"]
+    TM_Run["RunCurrentState() [Coroutine]"]
+    TM_Set["SetState()"]
+    TM_End["OnTurnEnd()"]
+    TM_Submit["PlayerSubmit()"]
+    TM_Init["InitializeStates()"]
+  end
+
+  %% ─────────────────────────────────────────
+  %% Turn States  🟠
+  %% ─────────────────────────────────────────
+  subgraph States[Turn States  ❶→❷→❸→❹→❺→❻→❼→❽]
+    S1["❶ CustomerArrivalState\nEnter / Execute / Exit"]
+    S2["❷ RelicTriggerState\nEnter / Execute / Exit"]
+    S3["❸ DrawCardsState\nEnter / Execute / Exit"]
+    S4["❹ PlayerActionState\nEnter / Execute / Exit\nOnPlayerSubmit()"]
+    S5["❺ EnvironmentResolveState\nEnter / Execute / Exit"]
+    S6["❻ CustomerJudgeState\nEnter / Execute / Exit"]
+    S7["❼ PatienceCheckState\nEnter / Execute / Exit"]
+    S8["❽ RelicUpdateState\nEnter / Execute / Exit"]
+  end
+
+  %% ─────────────────────────────────────────
+  %% DeckManager  🟢
+  %% ─────────────────────────────────────────
+  subgraph DM[DeckManager]
+    DM_Init["InitDeck()"]
+    DM_DiscardDraw["DiscardHandAndDraw()"]
+    DM_Discard["DiscardHand()"]
+    DM_Draw["DrawHand()"]
+    DM_Remove["RemoveFromHand()"]
+    DM_Add["AddToHand()"]
+    DM_DiscardRune["DiscardRune()"]
+    DM_Exhaust["ExhaustRune()"]
+    DM_Reshuffle["ReshuffleDiscard()"]
+    DM_Shuffle["Shuffle()"]
+  end
+
+  %% ─────────────────────────────────────────
+  %% WorkbenchManager  🟢
+  %% ─────────────────────────────────────────
+  subgraph WM[WorkbenchManager]
+    WM_Select["SelectScroll()"]
+    WM_Place["PlaceRune()"]
+    WM_Remove["RemoveRune()"]
+    WM_Submit["Submit()"]
+    WM_Clear["ClearSlots()"]
+    WM_Find["FindNextEmptySlot()"]
+    WM_Can["CanSubmit()"]
+  end
+
+  %% ─────────────────────────────────────────
+  %% ScrollInventory  🩵
+  %% ─────────────────────────────────────────
+  subgraph SI[ScrollInventory]
+    SI_Init["Init()"]
+    SI_Add["AddScroll()"]
+    SI_Has["HasScroll()"]
+  end
+
+  %% ─────────────────────────────────────────
+  %% ScrollProcessor (static)  🩵
+  %% ─────────────────────────────────────────
+  subgraph SP[ScrollProcessor]
+    SP_Proc["Process()"]
+    SP_Direct["ProcessDirectAdd()"]
+    SP_Multi["ProcessMultiplyAll()"]
+    SP_Pos["ProcessPositiveOnly()"]
+    SP_Tag["ProcessTagMultiply()"]
+    SP_Avg["ProcessAverage()"]
+    SP_Inv["ProcessInvert()"]
+    SP_Sum["SumPerAttribute()"]
+    SP_ToEff["ToRuneEffects()"]
+    SP_Log["LogResult()"]
+  end
+
+  %% ─────────────────────────────────────────
+  %% EnvironmentManager  🟡
+  %% ─────────────────────────────────────────
+  subgraph EM[EnvironmentManager]
+    EM_Apply["ApplyEffects()"]
+    EM_Force["ForceSetValue()"]
+    EM_Score["ModifyScore()"]
+    EM_Snap["SnapshotCurrent()"]
+    EM_Record["RecordSnapshot()"]
+    EM_Check["CheckAndTriggerExtremeEvents()"]
+    EM_Reset["ResetToInitial()"]
+    EM_Diff["DiffFromSnapshot()"]
+    EM_HandleDark["HandleDarknessTriggered()"]
+  end
+
+  %% ─────────────────────────────────────────
+  %% EnvironmentData  🟡
+  %% ─────────────────────────────────────────
+  subgraph ED[EnvironmentData]
+    ED_Get["GetValue()"]
+    ED_Set["SetValue()"]
+    ED_Delta["ApplyDelta()"]
+    ED_Score["ModifyScore()"]
+    ED_Clone["Clone()"]
+    ED_Diff["Diff() [static]"]
+  end
+
+  %% ─────────────────────────────────────────
+  %% ExtremeEventHandler  🟡
+  %% ─────────────────────────────────────────
+  subgraph EEH[ExtremeEventHandler]
+    EEH_Proc["Process()"]
+    EEH_Dark["ApplyDarkness()"]
+    EEH_Flood["ApplyFlood()"]
+    EEH_Heat["ApplyOverheat()"]
+    EEH_Cold["ApplyOvercold()"]
+  end
+
+  %% ─────────────────────────────────────────
+  %% CustomerManager  🟣
+  %% ─────────────────────────────────────────
+  subgraph CM[CustomerManager]
+    CM_Level["InitLevelMode()"]
+    CM_Endless["InitEndlessMode()"]
+    CM_Spawn["SpawnNextCustomer()"]
+    CM_Update["UpdateCurrentTracking()"]
+    CM_Check["CheckCurrentCustomer()"]
+    CM_Tick["TickPatience()"]
+    CM_Progress["GetCurrentProgressTexts()"]
+    CM_GetEnv["GetCurrentEnvData()"]
+  end
+
+  %% ─────────────────────────────────────────
+  %% CustomerInstance  🟣
+  %% ─────────────────────────────────────────
+  subgraph CI[CustomerInstance]
+    CI_New["Constructor()"]
+    CI_Update["UpdateTracking()"]
+    CI_Check["CheckRequirements()"]
+    CI_Tick["TickPatience()"]
+    CI_Build["BuildContext()"]
+    CI_Prog["GetProgressTexts()"]
+  end
+
+  %% ─────────────────────────────────────────
+  %% Requirements  🟣
+  %% ─────────────────────────────────────────
+  subgraph REQ[Requirements]
+    RF["RequirementFactory.Create()"]
+    AR["AbsoluteRequirement\nIsSatisfied() / GetProgressText()"]
+    RR["RelativeChangeRequirement\nIsSatisfied() / GetProgressText()"]
+    SR["StabilityRequirement\nIsSatisfied() / GetProgressText()"]
+  end
+
+  %% ─────────────────────────────────────────
+  %% RelicManager  🟤
+  %% ─────────────────────────────────────────
+  subgraph RM[RelicManager]
+    RM_Init["InitRelics()"]
+    RM_Add["AddRelic()"]
+    RM_Tick["TickAll()"]
+    RM_Force["ForceIncrementAllUnsatisfied()"]
+    RM_Punish["ApplyPunishment()"]
+  end
+
+  %% ─────────────────────────────────────────
+  %% RelicInstance  🟤
+  %% ─────────────────────────────────────────
+  subgraph RI[RelicInstance]
+    RI_Tick["Tick()"]
+    RI_Force["ForceIncrementUnsatisfied()"]
+  end
+
+  %% ─────────────────────────────────────────
+  %% Events (C# Action / async callbacks)  ⚫
+  %% ─────────────────────────────────────────
+  EVT_Dark(["⚡ OnDarknessTriggered"])
+  EVT_Punish(["⚡ OnPunishmentTriggered"])
+  EVT_Queue(["⚡ OnQueueEmpty"])
+  EVT_Satisfied(["⚡ OnCustomerSatisfied"])
+  EVT_Left(["⚡ OnCustomerLeft"])
+  EVT_Arrived(["⚡ OnCustomerArrived"])
+
+  %% ═════════════════════════════════════════
+  %% CALL RELATIONSHIPS
+  %% ═════════════════════════════════════════
+
+  %% --- GameManager startup ---
+  GM_Start --> EM_Reset
+  GM_Start --> DM_Init
+  GM_Start --> SI_Init
+  GM_Start --> RM_Init
+  GM_Start --> CM_Level
+  GM_Start --> CM_Endless
+  GM_Start --> TM_Start
+  GM_Start --> GM_Sub
+  GM_Check --> GM_End
+  GM_Punish --> GM_End
+
+  %% --- TurnManager internal ---
+  TM_Init --> States
+  TM_Start --> TM_Next
+  TM_Next --> TM_Run
+  TM_Run --> TM_Set
+  TM_End --> TM_Next
+  TM_Submit --> S4
+
+  %% --- State machine sequence ---
+  S1 -->|"Exit → SetState"| S2
+  S2 -->|"Exit → SetState"| S3
+  S3 -->|"Exit → SetState"| S4
+  S4 -->|"Exit → SetState"| S5
+  S5 -->|"Exit → SetState"| S6
+  S6 -->|"Exit → SetState"| S7
+  S7 -->|"Exit → SetState"| S8
+  S8 -->|"Exit → OnTurnEnd"| TM_End
+
+  %% --- State → Manager calls ---
+  S1 -->|"Execute"| CM_Spawn
+  S2 -->|"Execute"| RM_Tick
+  S3 -->|"Execute"| DM_DiscardDraw
+  S5 -->|"Execute"| SP_Proc
+  S5 -->|"Execute"| EM_Apply
+  S5 -->|"Execute"| CM_Update
+  S5 -->|"Exit"| EM_Record
+  S6 -->|"Execute"| CM_Check
+  S7 -->|"Execute"| CM_Tick
+  S8 -->|"Execute"| GM_Check
+
+  %% --- WorkbenchManager ---
+  WM_Place --> WM_Find
+  WM_Place --> DM_Remove
+  WM_Remove --> DM_Add
+  WM_Clear --> DM_Add
+  WM_Submit --> WM_Can
+  WM_Submit --> DM_DiscardRune
+  WM_Submit --> DM_Exhaust
+  WM_Submit --> TM_Submit
+
+  %% --- DeckManager internals ---
+  DM_DiscardDraw --> DM_Discard
+  DM_DiscardDraw --> DM_Draw
+  DM_Draw --> DM_Reshuffle
+  DM_Reshuffle --> DM_Shuffle
+  DM_Exhaust --> RI_Force
+
+  %% --- EnvironmentManager internals ---
+  EM_Apply --> ED_Delta
+  EM_Apply --> EM_Check
+  EM_Check --> EEH_Proc
+  EM_Check --> EM_Score
+  EM_Force --> ED_Set
+  EM_Score --> ED_Score
+  EM_Snap --> ED_Clone
+  EM_Record --> ED_Clone
+  EM_Diff --> ED_Diff
+
+  %% --- ExtremeEventHandler internals ---
+  EEH_Proc --> EEH_Dark
+  EEH_Proc --> EEH_Flood
+  EEH_Proc --> EEH_Heat
+  EEH_Proc --> EEH_Cold
+  EEH_Dark --> ED_Set
+  EEH_Dark --> EVT_Dark
+  EEH_Flood --> ED_Delta
+  EEH_Heat --> ED_Score
+  EEH_Cold --> ED_Score
+
+  %% --- EnvironmentData internals ---
+  ED_Delta --> ED_Get
+  ED_Delta --> ED_Set
+
+  %% --- CustomerManager internals ---
+  CM_Spawn --> CM_GetEnv
+  CM_Spawn --> CI_New
+  CM_Spawn --> EVT_Arrived
+  CM_GetEnv --> EM_Snap
+  CM_Update --> CM_GetEnv
+  CM_Update --> CI_Update
+  CM_Check --> CM_GetEnv
+  CM_Check --> CI_Check
+  CM_Check --> EM_Score
+  CM_Check --> EVT_Satisfied
+  CM_Check --> EVT_Queue
+  CM_Tick --> CI_Tick
+  CM_Tick --> EM_Score
+  CM_Tick --> EVT_Left
+  CM_Progress --> CM_GetEnv
+  CM_Progress --> CI_Prog
+
+  %% --- CustomerInstance internals ---
+  CI_New --> RF
+  RF --> AR
+  RF --> RR
+  RF --> SR
+  CI_Check --> CI_Build
+  CI_Check --> AR
+  CI_Check --> RR
+  CI_Check --> SR
+  CI_Update --> ED_Diff
+  CI_Build --> ED_Diff
+  CI_Prog --> CI_Build
+  CI_Prog --> AR
+  CI_Prog --> RR
+  CI_Prog --> SR
+
+  %% --- RelicManager internals ---
+  RM_Tick --> RI_Tick
+  RM_Tick --> EM_Apply
+  RM_Tick --> EM_Score
+  RM_Tick --> RM_Punish
+  RM_Force --> RI_Force
+  RM_Force --> RM_Punish
+  RM_Punish --> EM_Force
+  RM_Punish --> EM_Apply
+  RM_Punish --> EM_Score
+  RM_Punish --> EVT_Punish
+
+  %% --- ScrollProcessor internals ---
+  SP_Proc --> SP_Direct
+  SP_Proc --> SP_Multi
+  SP_Proc --> SP_Pos
+  SP_Proc --> SP_Tag
+  SP_Proc --> SP_Avg
+  SP_Proc --> SP_Inv
+  SP_Proc --> SP_Log
+  SP_Direct --> SP_Sum
+  SP_Multi --> SP_Sum
+  SP_Pos --> SP_Sum
+  SP_Avg --> SP_Sum
+  SP_Inv --> SP_Sum
+  SP_Sum --> SP_ToEff
+
+  %% --- Event → handler bindings ---
+  EVT_Dark -->|"EM subscribes"| EM_HandleDark
+  EVT_Dark -->|"RM subscribes"| RM_Force
+  EVT_Punish -->|"GM subscribes"| GM_Punish
+  EVT_Queue -->|"GM subscribes"| GM_Clear
+
+  %% ═════════════════════════════════════════
+  %% NODE COLORS (classDef)
+  %% ═════════════════════════════════════════
+
+  classDef ctrl   fill:#ff6b6b,stroke:#b22222,color:#fff
+  classDef state  fill:#ffaa80,stroke:#cc5500,color:#2b1000
+  classDef env    fill:#ffd166,stroke:#cc8800,color:#2b1a00
+  classDef card   fill:#6bcb77,stroke:#2d6a35,color:#0d2e13
+  classDef scroll fill:#4ecdc4,stroke:#1a8a84,color:#002926
+  classDef cust   fill:#c3a6ff,stroke:#6a28d9,color:#1a0042
+  classDef relic  fill:#c47a5a,stroke:#7a3a18,color:#fff
+  classDef evt    fill:#aaaaaa,stroke:#555555,color:#fff
+
+  %% 🔴 Game Control
+  class GM_Start,GM_Check,GM_End,GM_Clear,GM_Punish,GM_Sub,GM_Unsub ctrl
+  class TM_Start,TM_Next,TM_Run,TM_Set,TM_End,TM_Submit,TM_Init ctrl
+
+  %% 🟠 Turn States
+  class S1,S2,S3,S4,S5,S6,S7,S8 state
+
+  %% 🟡 Environment
+  class EM_Apply,EM_Force,EM_Score,EM_Snap,EM_Record,EM_Check,EM_Reset,EM_Diff,EM_HandleDark env
+  class ED_Get,ED_Set,ED_Delta,ED_Score,ED_Clone,ED_Diff env
+  class EEH_Proc,EEH_Dark,EEH_Flood,EEH_Heat,EEH_Cold env
+
+  %% 🟢 Card / Rune
+  class DM_Init,DM_DiscardDraw,DM_Discard,DM_Draw,DM_Remove,DM_Add,DM_DiscardRune,DM_Exhaust,DM_Reshuffle,DM_Shuffle card
+  class WM_Select,WM_Place,WM_Remove,WM_Submit,WM_Clear,WM_Find,WM_Can card
+
+  %% 🩵 Scroll
+  class SI_Init,SI_Add,SI_Has scroll
+  class SP_Proc,SP_Direct,SP_Multi,SP_Pos,SP_Tag,SP_Avg,SP_Inv,SP_Sum,SP_ToEff,SP_Log scroll
+
+  %% 🟣 Customer
+  class CM_Level,CM_Endless,CM_Spawn,CM_Update,CM_Check,CM_Tick,CM_Progress,CM_GetEnv cust
+  class CI_New,CI_Update,CI_Check,CI_Tick,CI_Build,CI_Prog cust
+  class RF,AR,RR,SR cust
+
+  %% 🟤 Relic
+  class RM_Init,RM_Add,RM_Tick,RM_Force,RM_Punish relic
+  class RI_Tick,RI_Force relic
+
+  %% ⚫ Events
+  class EVT_Dark,EVT_Punish,EVT_Queue,EVT_Satisfied,EVT_Left,EVT_Arrived evt
+
+  %% ─────────────────────────────────────────
+  %% SUBGRAPH BACKGROUND COLORS
+  %% ─────────────────────────────────────────
+  style GM    fill:#ffe0e0,stroke:#b22222
+  style TM    fill:#ffe0e0,stroke:#b22222
+  style States fill:#ffeedd,stroke:#cc5500
+  style DM    fill:#e0f5e4,stroke:#2d6a35
+  style WM    fill:#e0f5e4,stroke:#2d6a35
+  style SI    fill:#d9faf8,stroke:#1a8a84
+  style SP    fill:#d9faf8,stroke:#1a8a84
+  style EM    fill:#fff8d9,stroke:#cc8800
+  style ED    fill:#fff8d9,stroke:#cc8800
+  style EEH   fill:#fff8d9,stroke:#cc8800
+  style CM    fill:#ede0ff,stroke:#6a28d9
+  style CI    fill:#ede0ff,stroke:#6a28d9
+  style REQ   fill:#ede0ff,stroke:#6a28d9
+  style RM    fill:#f0ddd0,stroke:#7a3a18
+  style RI    fill:#f0ddd0,stroke:#7a3a18

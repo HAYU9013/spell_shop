@@ -1,0 +1,321 @@
+classDiagram
+
+%% ========== Color Groups ==========
+%% unityBase  : #4a4a6a 深藍灰  — Unity 基底
+%% interface_ : #1a6b8a 深藍    — 介面
+%% scriptable : #7a4f1a 深橙    — ScriptableObject 資料定義
+%% dataStruct : #2a5c3f 深綠    — 純資料 / Struct
+%% instance_  : #3b6b3b 中綠    — Runtime Instance
+%% reqImpl    : #6b3b6b 深紫    — IRequirement 實作
+%% stateImpl  : #8a5a1a 深琥珀  — IGameState 實作
+%% manager_   : #8a1a1a 深紅    — MonoBehaviour Manager
+%% utility_   : #3a5a6a 鋼藍    — 工具類
+
+%% ===== 樣式定義 =====
+classDef unityBase  fill:#2e2e4e,stroke:#8888cc,color:#ddddff
+classDef interface_ fill:#0d4f6e,stroke:#44aadd,color:#cceeff
+classDef scriptable fill:#5c3800,stroke:#cc8833,color:#ffe0aa
+classDef dataStruct fill:#1a3d2b,stroke:#44aa77,color:#aaffcc
+classDef instance_  fill:#1e4d1e,stroke:#55bb55,color:#ccffcc
+classDef reqImpl    fill:#4a1a4a,stroke:#bb55bb,color:#ffccff
+classDef stateImpl  fill:#5c3c00,stroke:#ddaa33,color:#fff0bb
+classDef manager_   fill:#5a0a0a,stroke:#dd4444,color:#ffcccc
+classDef utility_   fill:#1a3a4a,stroke:#4499bb,color:#bbddee
+
+%% ========== Unity Base Classes ==========
+class MonoBehaviour
+class ScriptableObject
+
+%% ========== Interfaces ==========
+class IRequirement {
+    <<interface>>
+    +IsSatisfied(RequirementContext) bool
+    +GetProgressText(RequirementContext) string
+}
+
+class IGameState {
+    <<interface>>
+    +Enter()
+    +Execute()
+    +Exit()
+}
+
+%% ========== ScriptableObjects ==========
+class CustomerData {
+    +requirements List~RequirementData~
+}
+class RelicData {
+    +satisfiedCondition RelicCondition
+    +satisfiedEnvEffects RuneEffect[]
+    +unsatisfiedEnvEffects RuneEffect[]
+}
+class RuneData {
+    +effects RuneEffect[]
+}
+class ScrollData
+
+ScriptableObject <|-- CustomerData
+ScriptableObject <|-- RelicData
+ScriptableObject <|-- RuneData
+ScriptableObject <|-- ScrollData
+
+%% ========== Data / Struct Classes ==========
+class EnvironmentData
+class EnvironmentDelta {
+    <<struct>>
+}
+class RuneEffect {
+    <<struct>>
+}
+class RequirementContext {
+    +CurrentEnv EnvironmentData
+    +ArrivalSnapshot EnvironmentData
+    +AccumulatedDelta EnvironmentDelta
+    +StabilityCount int
+}
+class RequirementData
+class RelicCondition
+class RelicTickResult
+class SubmitRecord {
+    +TurnNumber int
+    +Scroll ScrollData
+    +Runes RuneData[]
+}
+
+RequirementContext *-- EnvironmentData
+RequirementContext *-- EnvironmentDelta
+SubmitRecord *-- ScrollData
+SubmitRecord *-- RuneData
+RelicData *-- RelicCondition
+RelicData *-- RuneEffect
+
+%% ========== Instance Classes ==========
+class CustomerInstance {
+    +Data CustomerData
+    +ArrivalSnapshot EnvironmentData
+    -_requirements List~IRequirement~
+}
+class RelicInstance {
+    +Data RelicData
+}
+class RuneInstance {
+    +Data RuneData
+}
+class ScrollInstance {
+    +Data ScrollData
+}
+
+CustomerInstance *-- CustomerData
+CustomerInstance *-- EnvironmentData
+CustomerInstance *-- IRequirement
+RelicInstance *-- RelicData
+RuneInstance *-- RuneData
+ScrollInstance *-- ScrollData
+
+%% ========== IRequirement Implementations ==========
+class AbsoluteRequirement {
+    -_data RequirementData
+}
+class RelativeChangeRequirement {
+    -_data RequirementData
+}
+class StabilityRequirement {
+    -_data RequirementData
+}
+class RequirementFactory {
+    <<static>>
+    +Create(RequirementData) IRequirement
+}
+
+IRequirement <|.. AbsoluteRequirement
+IRequirement <|.. RelativeChangeRequirement
+IRequirement <|.. StabilityRequirement
+AbsoluteRequirement *-- RequirementData
+RelativeChangeRequirement *-- RequirementData
+StabilityRequirement *-- RequirementData
+RequirementFactory ..> IRequirement : creates
+
+%% ========== IGameState Implementations ==========
+class CustomerArrivalState {
+    -_turnManager TurnManager
+}
+class RelicTriggerState {
+    -_turnManager TurnManager
+}
+class DrawCardsState {
+    -_turnManager TurnManager
+}
+class PlayerActionState {
+    -_turnManager TurnManager
+}
+class EnvironmentResolveState {
+    -_turnManager TurnManager
+}
+class CustomerJudgeState {
+    -_turnManager TurnManager
+}
+class PatienceCheckState {
+    -_turnManager TurnManager
+}
+class RelicUpdateState {
+    -_turnManager TurnManager
+}
+
+IGameState <|.. CustomerArrivalState
+IGameState <|.. RelicTriggerState
+IGameState <|.. DrawCardsState
+IGameState <|.. PlayerActionState
+IGameState <|.. EnvironmentResolveState
+IGameState <|.. CustomerJudgeState
+IGameState <|.. PatienceCheckState
+IGameState <|.. RelicUpdateState
+
+%% ========== MonoBehaviour Managers ==========
+class GameManager {
+    -_initialDeck List~RuneData~
+    -_initialScrolls List~ScrollData~
+    -_initialRelics List~RelicData~
+    -_levelQueue List~CustomerData~
+    -_endlessPool List~CustomerData~
+    -_turnManager TurnManager
+}
+class TurnManager {
+    -_states Dictionary~TurnPhase,IGameState~
+    -_currentState IGameState
+    -_currentTurn int
+}
+class CustomerManager {
+    -_queue Queue~CustomerData~
+    -_currentCustomer CustomerInstance
+}
+class DeckManager {
+    -_drawPile List~RuneInstance~
+    -_discardPile List~RuneInstance~
+    -_hand List~RuneInstance~
+}
+class EnvironmentManager {
+    -_env EnvironmentData
+    -_extremeEventHandler ExtremeEventHandler
+    -_history LinkedList~EnvironmentData~
+}
+class RelicManager {
+    -_relics List~RelicInstance~
+}
+class ScrollInventory {
+    -_scrolls List~ScrollData~
+}
+class WorkbenchManager {
+    -_selectedScroll ScrollData
+    -_slots RuneInstance[]
+    -_history List~SubmitRecord~
+    -_turnManager TurnManager
+}
+class SpriteMover
+
+MonoBehaviour <|-- GameManager
+MonoBehaviour <|-- TurnManager
+MonoBehaviour <|-- CustomerManager
+MonoBehaviour <|-- DeckManager
+MonoBehaviour <|-- EnvironmentManager
+MonoBehaviour <|-- RelicManager
+MonoBehaviour <|-- ScrollInventory
+MonoBehaviour <|-- WorkbenchManager
+MonoBehaviour <|-- SpriteMover
+
+%% ========== Utility Classes ==========
+class ExtremeEventHandler
+class ScrollProcessor {
+    <<static>>
+}
+
+%% ========== Manager Compositions ==========
+GameManager *-- TurnManager
+GameManager o-- CustomerData
+GameManager o-- RuneData
+GameManager o-- ScrollData
+GameManager o-- RelicData
+
+TurnManager *-- IGameState
+
+CustomerManager *-- CustomerInstance
+CustomerManager o-- CustomerData
+CustomerManager ..> EnvironmentManager : uses
+
+DeckManager *-- RuneInstance
+
+EnvironmentManager *-- EnvironmentData
+EnvironmentManager *-- ExtremeEventHandler
+
+RelicManager *-- RelicInstance
+RelicManager ..> EnvironmentManager : uses
+
+WorkbenchManager *-- RuneInstance
+WorkbenchManager *-- SubmitRecord
+WorkbenchManager o-- ScrollData
+WorkbenchManager ..> DeckManager : uses
+WorkbenchManager ..> TurnManager : ref
+
+CustomerArrivalState ..> TurnManager : ref
+RelicTriggerState ..> TurnManager : ref
+DrawCardsState ..> TurnManager : ref
+PlayerActionState ..> TurnManager : ref
+EnvironmentResolveState ..> TurnManager : ref
+CustomerJudgeState ..> TurnManager : ref
+PatienceCheckState ..> TurnManager : ref
+RelicUpdateState ..> TurnManager : ref
+
+ScrollProcessor ..> EnvironmentData : uses
+ScrollProcessor ..> RuneInstance : uses
+
+%% ========== 套用顏色 ==========
+class MonoBehaviour:::unityBase
+class ScriptableObject:::unityBase
+
+class IRequirement:::interface_
+class IGameState:::interface_
+
+class CustomerData:::scriptable
+class RelicData:::scriptable
+class RuneData:::scriptable
+class ScrollData:::scriptable
+
+class EnvironmentData:::dataStruct
+class EnvironmentDelta:::dataStruct
+class RuneEffect:::dataStruct
+class RequirementContext:::dataStruct
+class RequirementData:::dataStruct
+class RelicCondition:::dataStruct
+class RelicTickResult:::dataStruct
+class SubmitRecord:::dataStruct
+
+class CustomerInstance:::instance_
+class RelicInstance:::instance_
+class RuneInstance:::instance_
+class ScrollInstance:::instance_
+
+class AbsoluteRequirement:::reqImpl
+class RelativeChangeRequirement:::reqImpl
+class StabilityRequirement:::reqImpl
+class RequirementFactory:::reqImpl
+
+class CustomerArrivalState:::stateImpl
+class RelicTriggerState:::stateImpl
+class DrawCardsState:::stateImpl
+class PlayerActionState:::stateImpl
+class EnvironmentResolveState:::stateImpl
+class CustomerJudgeState:::stateImpl
+class PatienceCheckState:::stateImpl
+class RelicUpdateState:::stateImpl
+
+class GameManager:::manager_
+class TurnManager:::manager_
+class CustomerManager:::manager_
+class DeckManager:::manager_
+class EnvironmentManager:::manager_
+class RelicManager:::manager_
+class ScrollInventory:::manager_
+class WorkbenchManager:::manager_
+class SpriteMover:::manager_
+
+class ExtremeEventHandler:::utility_
+class ScrollProcessor:::utility_
