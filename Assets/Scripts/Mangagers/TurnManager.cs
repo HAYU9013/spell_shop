@@ -153,4 +153,84 @@ public class TurnManager : MonoBehaviour
         StopAllCoroutines();
         Debug.Log("Turn flow stopped.");
     }
+
+    // -------------------------------------------------------------------------
+    // Editor 測試用 ContextMenu
+    // -------------------------------------------------------------------------
+
+    [ContextMenu("Debug_StartGame")]
+    private void Debug_StartGame()
+    {
+        if (!Application.isPlaying)
+        {
+            Debug.LogWarning("請在 Play Mode 下使用");
+            return;
+        }
+        InitializeStates();
+        StartGame();
+    }
+
+    [ContextMenu("Debug_GoToNextState")]
+    private void Debug_GoToNextState()
+    {
+        if (!Application.isPlaying)
+        {
+            Debug.LogWarning("請在 Play Mode 下使用");
+            return;
+        }
+
+        // PlayerAction 階段正在等待玩家送出，需先解除阻塞
+        if (_currentPhase == TurnPhase.PlayerAction)
+        {
+            Debug.Log("[ContextMenu] 模擬玩家送出 → 解除 PlayerAction 阻塞");
+            PlayerAction.OnPlayerSubmit();
+            return;
+        }
+
+        // 其他階段：直接跳到下一個 Phase
+        TurnPhase next = GetNextPhase(_currentPhase);
+        Debug.Log($"[ContextMenu] 強制跳過 {_currentPhase} → {next}");
+        StopAllCoroutines();
+        _currentPhase = next;
+        _currentState = _states[_currentPhase];
+        StartCoroutine(RunCurrentState());
+    }
+
+    [ContextMenu("Debug_SkipToPlayerAction")]
+    private void Debug_SkipToPlayerAction()
+    {
+        if (!Application.isPlaying)
+        {
+            Debug.LogWarning("請在 Play Mode 下使用");
+            return;
+        }
+        Debug.Log("[ContextMenu] 直接跳到 PlayerAction");
+        StopAllCoroutines();
+        _currentPhase = TurnPhase.PlayerAction;
+        _currentState = _states[_currentPhase];
+        StartCoroutine(RunCurrentState());
+    }
+
+    [ContextMenu("Debug_PrintCurrentPhase")]
+    private void Debug_PrintCurrentPhase()
+    {
+        Debug.Log($"[ContextMenu] Turn {_currentTurn}，目前階段：{_currentPhase}");
+    }
+
+    /// <summary>依照回合流程順序取得下一個 Phase（供 Debug 跳轉使用）</summary>
+    private TurnPhase GetNextPhase(TurnPhase current)
+    {
+        switch (current)
+        {
+            case TurnPhase.CustomerArrival:    return TurnPhase.RelicTrigger;
+            case TurnPhase.RelicTrigger:       return TurnPhase.DrawCards;
+            case TurnPhase.DrawCards:          return TurnPhase.PlayerAction;
+            case TurnPhase.PlayerAction:       return TurnPhase.EnvironmentResolve;
+            case TurnPhase.EnvironmentResolve: return TurnPhase.CustomerJudge;
+            case TurnPhase.CustomerJudge:      return TurnPhase.PatienceCheck;
+            case TurnPhase.PatienceCheck:      return TurnPhase.RelicUpdate;
+            case TurnPhase.RelicUpdate:        return TurnPhase.CustomerArrival;
+            default:                           return TurnPhase.CustomerArrival;
+        }
+    }
 }
