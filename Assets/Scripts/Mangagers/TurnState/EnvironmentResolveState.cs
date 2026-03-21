@@ -31,10 +31,13 @@ public class EnvironmentResolveState : IGameState
     {
         Debug.Log("[Phase 5] EnvironmentResolve — Execute");
 
-        // TODO: ScrollProcessor + DeckManager 實作後取消注解
-        // var effects = ScrollProcessor.Process(submittedScroll);
-        // EnvironmentManager.Instance.ApplyEffects(effects);
-        // DeckManager.Instance.ExhaustConsumables(submittedScroll);
+        // TODO: ScrollProcessor 實作後取消注解，將 LastSubmit 傳入計算效果
+        // var submit = WorkbenchManager.Instance?.LastSubmit;
+        // if (submit != null)
+        // {
+        //     var effects = ScrollProcessor.Process(submit);
+        //     EnvironmentManager.Instance.ApplyEffects(effects);
+        // }
 
         // 更新顧客追蹤（累積 delta + 穩定性計數）
         CustomerManager.Instance?.UpdateCurrentTracking();

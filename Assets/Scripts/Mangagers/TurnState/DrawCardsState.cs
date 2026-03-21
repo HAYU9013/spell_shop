@@ -25,10 +25,8 @@ public class DrawCardsState : IGameState
     {
         Debug.Log("[Phase 3] DrawCards — Execute");
 
-        // TODO:
-        // 1. HandManager.DiscardAll() → 所有手牌送回棄牌堆
-        // 2. DeckManager.Draw(config.drawPerTurn)
-        // 3. HandManager.AddToHand(drawnRunes)
+        // 棄掉上回手牌，重新抽牌
+        DeckManager.Instance?.DiscardHandAndDraw();
 
         yield break;
     }
