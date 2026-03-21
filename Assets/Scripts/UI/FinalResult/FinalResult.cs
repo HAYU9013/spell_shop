@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -48,15 +49,37 @@ public class FinalResult : MonoBehaviour
     private void HandleLevelClear()
     {
         if (_youDie != null) _youDie.SetActive(false);
-        if (_youWin != null) _youWin.SetActive(true);
+
+        if (_youWin != null)
+        {
+            _youWin.SetActive(true);
+            _youWin.transform.localScale = Vector3.zero;
+            _youWin.transform.DOScale(1f, 0.6f).SetEase(Ease.OutElastic).SetLink(_youWin);
+        }
 
         if (_scoreText != null && EnvironmentManager.Instance != null)
-            _scoreText.text = EnvironmentManager.Instance.Score.ToString();
+        {
+            int target = EnvironmentManager.Instance.Score;
+            _scoreText.text = "0";
+            DOTween.To(() => 0, x => _scoreText.text = x.ToString(), target, 1.2f)
+                .SetEase(Ease.OutQuad)
+                .SetDelay(0.5f)
+                .SetLink(_youWin);
+        }
     }
 
     private void HandleGameOver(string reason)
     {
         if (_youWin != null) _youWin.SetActive(false);
-        if (_youDie != null) _youDie.SetActive(true);
+
+        if (_youDie != null)
+        {
+            var cg = _youDie.GetComponent<CanvasGroup>() ?? _youDie.AddComponent<CanvasGroup>();
+            cg.alpha = 0f;
+            _youDie.transform.localScale = Vector3.one * 1.2f;
+            _youDie.SetActive(true);
+            cg.DOFade(1f, 0.6f).SetEase(Ease.OutQuad).SetLink(_youDie);
+            _youDie.transform.DOScale(1f, 0.6f).SetEase(Ease.OutQuad).SetLink(_youDie);
+        }
     }
 }

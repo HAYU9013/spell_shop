@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -5,6 +6,7 @@ public class UpdateMoisture : MonoBehaviour
 {
     private TextMeshProUGUI _text;
     private bool _subscribed;
+    private int _displayValue;
 
     private void Awake()
     {
@@ -59,7 +61,12 @@ public class UpdateMoisture : MonoBehaviour
 
     private void SetText(int value)
     {
-        if (_text != null)
-            _text.text = value.ToString();
+        if (_text == null) return;
+        _text.DOKill();
+        DOTween.To(() => _displayValue, x => { _displayValue = x; _text.text = x.ToString(); }, value, 0.4f)
+            .SetEase(Ease.OutQuad).SetLink(gameObject);
+        _text.DOColor(Color.yellow, 0.1f)
+            .OnComplete(() => _text.DOColor(Color.white, 0.25f))
+            .SetLink(gameObject);
     }
 }
