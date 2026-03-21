@@ -74,11 +74,11 @@ H24 ━━ 交件
 
 ### Coder
 
-- [ ] `Constants.cs` — 數值常數（初始業績30、環境0~20）
-- [ ] 定義所有 Enum（`EnvAttribute` / `Rarity` / `RuneType` / `RuneTag` / `ScrollModifierType` / `TurnPhase` / `RequirementType` / `CompareOperator` / `RelicPunishment`）
-- [ ] `RuneData.cs` — ScriptableObject，欄位：名稱、效果列表、稀有度、標籤、RuneType（循環/消耗）
-- [ ] `RuneEffect.cs` — `[EnvAttribute attr, int delta]` 資料結構
-- [ ] `ScrollData.cs` — ScriptableObject，欄位：名稱、槽數、修飾類型、標籤限制
+- [x] `Constants.cs` — 數值常數（初始業績30、環境0~20）
+- [x] 定義所有 Enum（`EnvAttribute` / `Rarity` / `RuneType` / `RuneTag` / `ScrollModifierType` / `TurnPhase` / `RequirementType` / `CompareOperator` / `RelicPunishment`）
+- [x] `RuneData.cs` — ScriptableObject，欄位：名稱、效果列表、稀有度、標籤、RuneType（循環/消耗）
+- [x] `RuneEffect.cs` — `[EnvAttribute attr, int delta]` 資料結構
+- [x] `ScrollData.cs` — ScriptableObject，欄位：名稱、槽數、修飾類型、標籤限制
 - [ ] `RequirementData.cs` — 需求資料結構（type、attribute、compareOp、targetValue、targetValueMax、requiredDelta、stabilityTurns）
 - [ ] `CustomerData.cs` — ScriptableObject，欄位：名稱、`List<RequirementData>` 需求列表、耐心、業績獎勵、業績懲罰
 - [ ] `RelicData.cs` — ScriptableObject，欄位：名稱、滿意條件、滿意效果、不滿意效果、不滿意容忍上限、懲罰類型、懲罰效果

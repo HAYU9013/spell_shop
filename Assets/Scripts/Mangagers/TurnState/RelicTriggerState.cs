@@ -26,21 +26,8 @@ public class RelicTriggerState : IGameState
     {
         Debug.Log("[Phase 2] RelicTrigger — Execute");
 
-        // TODO: RelicManager.TickAll(env)
-        // 依 DisplayOrder 順序結算每個遺物
-        // foreach (var relic in RelicManager.Relics)
-        // {
-        //     var result = relic.Tick(env);
-        //     EnvironmentManager.ApplyEffects(result.effectsToApply);
-        //
-        //     if (result.punishmentTriggered)
-        //     {
-        //         if (result.punishmentType == RelicPunishment.PlayerDeath)
-        //             GameManager.EndGame("遺物懲罰");
-        //         else
-        //             EnvironmentManager.ApplyEffects(result.punishmentEffects);
-        //     }
-        // }
+        if (RelicManager.Instance != null)
+            RelicManager.Instance.TickAll();
 
         yield break;
     }
