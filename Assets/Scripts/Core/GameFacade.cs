@@ -59,7 +59,7 @@ public class GameFacade : MonoBehaviour
     public event Action<ExtremeEvent> OnExtremeEventTriggered;
 
     /// <summary>回合階段切換（用於鎖定/解鎖 UI 互動）</summary>
-    public event Action<TurnPhase> OnPhaseChanged;
+    public event Action<TurnManager.TurnPhase> OnPhaseChanged;
 
     /// <summary>遊戲結束（finalScore, turnsCleared）</summary>
     public event Action<int /*finalScore*/, int /*turnsCleared*/> OnGameOver;
@@ -204,7 +204,7 @@ public class GameFacade : MonoBehaviour
     // =========================================================
 
     /// <summary>目前回合階段（可用於在 PlayerAction 以外的階段鎖定 UI）</summary>
-    public TurnPhase CurrentPhase =>
+    public TurnManager.TurnPhase CurrentPhase =>
         TurnManager.Instance != null ? TurnManager.Instance.CurrentPhase : default;
 
     // =========================================================
@@ -432,12 +432,12 @@ public class GameFacade : MonoBehaviour
         OnRelicsChanged?.Invoke(BuildRelicSnapshots());
     }
 
-    private void HandlePhaseChanged(TurnPhase phase)
+    private void HandlePhaseChanged(TurnManager.TurnPhase phase)
     {
         OnPhaseChanged?.Invoke(phase);
 
         // Phase 8（RelicUpdate）結束後，遺物計數已更新，刷新遺物面板
-        if (phase == TurnPhase.RelicUpdate)
+        if (phase == TurnManager.TurnPhase.RelicUpdate)
             OnRelicsChanged?.Invoke(BuildRelicSnapshots());
     }
 

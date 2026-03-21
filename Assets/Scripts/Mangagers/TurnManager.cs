@@ -17,6 +17,9 @@ public class TurnManager : MonoBehaviour
         RelicUpdate         // 8. 遺物不滿意計數更新
     }
 
+    // --- Singleton ---
+    public static TurnManager Instance { get; private set; }
+
     // --- 狀態機 ---
     private Dictionary<TurnPhase, IGameState> _states;
     private IGameState _currentState;
@@ -39,6 +42,8 @@ public class TurnManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this) { Destroy(gameObject); return; }
+        Instance = this;
         InitializeStates();
     }
 
