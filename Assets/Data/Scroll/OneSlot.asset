@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: OneSlot
   m_EditorClassIdentifier: 
   scrollName: OneSlot
-  description: 
+  description: "\u4E00\u500B\u7E2B\u9699"
   icon: {fileID: 21300000, guid: 5dff5ded945b4ea4abb5f1c8714dd654, type: 3}
   slotCount: 1
   modifierType: 0
