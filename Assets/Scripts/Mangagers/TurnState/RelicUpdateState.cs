@@ -25,21 +25,25 @@ public class RelicUpdateState : IGameState
     {
         Debug.Log("[Phase 8] RelicUpdate — Execute");
 
-        // TODO:
-        // 檢查 Game Over
-        // if (EnvironmentManager.IsScoreZero)
-        //     GameManager.EndGame("破產");
-        //
-        // 遺物即死檢查已在 Phase 2 處理，此處做最終確認
+        // 業績歸零 → Game Over
+        // （遺物即死已在 Phase 2 由 RelicManager.OnPunishmentTriggered 事件觸發）
+        GameManager.Instance?.CheckScoreGameOver();
 
         yield break;
     }
 
     public IEnumerator Exit()
     {
-        Debug.Log("[Phase 8] RelicUpdate — Exit → Turn End");
+        Debug.Log("[Phase 8] RelicUpdate — Exit");
 
-        // 回合結束，通知 TurnManager 開始下一回合
+        // 遊戲已結束（Game Over 或 Level Clear）→ 停止回合，不再開始下一回合
+        if (GameManager.Instance != null && GameManager.Instance.IsGameEnded)
+        {
+            Debug.Log("[Phase 8] 遊戲已結束，停止回合流程");
+            yield break;
+        }
+
+        Debug.Log("[Phase 8] RelicUpdate — Turn End");
         _turnManager.OnTurnEnd();
         yield break;
     }

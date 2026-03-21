@@ -97,6 +97,14 @@ public enum ScrollModifierType
     Invert        // 正負反轉
 }
 
+// ----- 遊戲模式 -----
+
+public enum GameMode
+{
+    Level,   // 關卡模式：固定顧客隊列，清空通關
+    Endless  // 無限模式：顧客無限生成，撐到 Game Over
+}
+
 // ----- 獎勵類型 -----
 
 public enum RewardType
