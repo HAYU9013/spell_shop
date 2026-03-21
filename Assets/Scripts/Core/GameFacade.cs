@@ -258,6 +258,35 @@ public class GameFacade : MonoBehaviour
     }
 
     // =========================================================
+    // Action API — 丟棄
+    // =========================================================
+
+    /// <summary>
+    /// 丟棄庫存中的一張卷軸。
+    /// 若工作台正在使用同一張卷軸，先取消選取再丟棄。
+    /// </summary>
+    public bool DiscardScroll(ScrollData scroll)
+    {
+        var inv = ScrollInventory.Instance;
+        if (inv == null || scroll == null) return false;
+
+        // 若工作台正在使用此卷軸，先清空工作台
+        var wb = WorkbenchManager.Instance;
+        if (wb != null && wb.SelectedScroll == scroll)
+            wb.SelectScroll(null);
+
+        return inv.DiscardScroll(scroll);
+    }
+
+    /// <summary>
+    /// 丟棄指定索引的遺物。
+    /// </summary>
+    public bool DiscardRelic(int relicIndex)
+    {
+        return RelicManager.Instance?.DiscardRelicAt(relicIndex) ?? false;
+    }
+
+    // =========================================================
     // 訂閱 / 取消訂閱
     // =========================================================
 
@@ -287,6 +316,7 @@ public class GameFacade : MonoBehaviour
         {
             RelicManager.Instance.OnRelicCountChanged   += HandleRelicChanged;
             RelicManager.Instance.OnPunishmentTriggered += HandleRelicPunishment;
+            RelicManager.Instance.OnRelicRemoved        += HandleRelicChanged;
         }
 
         if (TurnManager.Instance != null)
@@ -327,6 +357,7 @@ public class GameFacade : MonoBehaviour
         {
             RelicManager.Instance.OnRelicCountChanged   -= HandleRelicChanged;
             RelicManager.Instance.OnPunishmentTriggered -= HandleRelicPunishment;
+            RelicManager.Instance.OnRelicRemoved        -= HandleRelicChanged;
         }
 
         if (TurnManager.Instance != null)
@@ -395,7 +426,7 @@ public class GameFacade : MonoBehaviour
         OnRelicsChanged?.Invoke(BuildRelicSnapshots());
     }
 
-    private void HandleRelicPunishment(RelicInstance relic, RelicInstance.RelicTickResult result)
+    private void HandleRelicPunishment(RelicInstance relic, RelicTickResult result)
     {
         // 懲罰觸發同樣更新遺物面板（計數、狀態可能改變）
         OnRelicsChanged?.Invoke(BuildRelicSnapshots());

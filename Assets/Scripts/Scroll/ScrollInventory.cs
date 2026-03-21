@@ -66,6 +66,33 @@ public class ScrollInventory : MonoBehaviour
     }
 
     // =========================================================
+    // 丟棄
+    // =========================================================
+
+    /// <summary>移除指定卷軸（丟棄第一個符合的實例）</summary>
+    public bool DiscardScroll(ScrollData scroll)
+    {
+        bool removed = _scrolls.Remove(scroll);
+        if (removed)
+        {
+            OnInventoryChanged?.Invoke();
+            Debug.Log($"[ScrollInventory] 丟棄卷軸：{scroll.scrollName}");
+        }
+        return removed;
+    }
+
+    /// <summary>移除指定索引的卷軸</summary>
+    public bool DiscardScrollAt(int index)
+    {
+        if (index < 0 || index >= _scrolls.Count) return false;
+        string name = _scrolls[index].scrollName;
+        _scrolls.RemoveAt(index);
+        OnInventoryChanged?.Invoke();
+        Debug.Log($"[ScrollInventory] 丟棄卷軸[{index}]：{name}");
+        return true;
+    }
+
+    // =========================================================
     // 查詢
     // =========================================================
 

@@ -47,6 +47,9 @@ public class RelicManager : MonoBehaviour
     /// <summary>懲罰觸發時通知（含結果，供 GameManager 處理 PlayerDeath）</summary>
     public event System.Action<RelicInstance, RelicTickResult> OnPunishmentTriggered;
 
+    /// <summary>遺物被丟棄時觸發</summary>
+    public event System.Action<RelicInstance> OnRelicRemoved;
+
     // =========================================================
     // 遺物列表
     // =========================================================
@@ -222,6 +225,33 @@ public class RelicManager : MonoBehaviour
     // =========================================================
 
     public int RelicCount => _relics.Count;
+
+    // =========================================================
+    // 丟棄
+    // =========================================================
+
+    /// <summary>丟棄指定遺物實例</summary>
+    public bool DiscardRelic(RelicInstance relic)
+    {
+        bool removed = _relics.Remove(relic);
+        if (removed)
+        {
+            OnRelicRemoved?.Invoke(relic);
+            Debug.Log($"[RelicManager] 丟棄遺物：{relic.Data.relicName}");
+        }
+        return removed;
+    }
+
+    /// <summary>丟棄指定索引的遺物</summary>
+    public bool DiscardRelicAt(int index)
+    {
+        if (index < 0 || index >= _relics.Count) return false;
+        var relic = _relics[index];
+        _relics.RemoveAt(index);
+        OnRelicRemoved?.Invoke(relic);
+        Debug.Log($"[RelicManager] 丟棄遺物[{index}]：{relic.Data.relicName}");
+        return true;
+    }
 
     // =========================================================
     // Debug
