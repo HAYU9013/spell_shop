@@ -27,18 +27,14 @@ public class PatienceCheckState : IGameState
     {
         Debug.Log("[Phase 7] PatienceCheck — Execute");
 
-        // TODO:
-        // if (顧客已在 Phase 6 滿足離開) → 跳過
-        //
-        // CustomerManager.TickPatience();
-        // if (customer.IsOutOfPatience)
-        // {
-        //     EnvironmentManager.ModifyScore(-customer.Data.scorePenalty);
-        //     // 顧客憤怒離開
-        //     // 迎接下一位顧客（下回合 Phase 1 處理）
-        // }
+        // Phase 6 已滿足（顧客已離開）→ 跳過
+        if (CustomerManager.Instance != null && !CustomerManager.Instance.HasCustomer)
+        {
+            Debug.Log("[Phase 7] 顧客已滿足離開，跳過耐心判定");
+            yield break;
+        }
 
-        yield break;
+        CustomerManager.Instance?.TickPatience();
     }
 
     public IEnumerator Exit()

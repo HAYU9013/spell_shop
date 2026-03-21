@@ -26,15 +26,7 @@ public class CustomerJudgeState : IGameState
     {
         Debug.Log("[Phase 6] CustomerJudge — Execute");
 
-        // TODO:
-        // bool satisfied = CustomerManager.CheckCurrentCustomer(env, submittedScroll);
-        // if (satisfied)
-        // {
-        //     var rewards = CustomerManager.GenerateRewards();
-        //     EnvironmentManager.ModifyScore(customer.Data.scoreReward);
-        //     // 發放獎勵（符文加入牌庫、卷軸加入庫存、遺物詢問玩家）
-        //     // 顧客離開 → 標記需要迎接下一位
-        // }
+        CustomerManager.Instance?.CheckCurrentCustomer();
 
         yield break;
     }

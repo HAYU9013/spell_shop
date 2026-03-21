@@ -31,20 +31,13 @@ public class EnvironmentResolveState : IGameState
     {
         Debug.Log("[Phase 5] EnvironmentResolve — Execute");
 
-        // TODO:
-        // 1. EnvironmentManager.SnapshotCurrent()
-        // 2. var effects = ScrollProcessor.Process(submittedScroll)
-        // 3. EnvironmentManager.ApplyEffects(effects)
-        // 4. 消耗型符文 → DeckManager.Exhaust()
-        // 5. 特殊效果 → ISpecialEffect.Execute()
-        // 6. RelicManager.CheckAllTagPreferences(scroll)
-        // 7. EnvironmentManager.CheckAndTriggerExtremeEvents()
-        //    - Darkness → RelicManager.ForceIncrementAllUnsatisfied()
-        //    - Flood → moisture += 5
-        //    - Overheat → score -= 10
-        //    - Overcold → score -= 10
-        // 8. ScrollInventory.ConsumeScroll(submittedScroll)
-        // 9. CustomerManager.UpdateCustomerTracking(env)
+        // TODO: ScrollProcessor + DeckManager 實作後取消注解
+        // var effects = ScrollProcessor.Process(submittedScroll);
+        // EnvironmentManager.Instance.ApplyEffects(effects);
+        // DeckManager.Instance.ExhaustConsumables(submittedScroll);
+
+        // 更新顧客追蹤（累積 delta + 穩定性計數）
+        CustomerManager.Instance?.UpdateCurrentTracking();
 
         yield break;
     }

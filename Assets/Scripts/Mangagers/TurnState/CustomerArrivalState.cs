@@ -24,18 +24,8 @@ public class CustomerArrivalState : IGameState
     {
         Debug.Log("[Phase 1] CustomerArrival — Execute");
 
-        // TODO: 檢查是否有當前顧客
-        // if (!CustomerManager.HasCustomer)
-        // {
-        //     var customer = CustomerManager.WelcomeNextCustomer(env);
-        //     if (customer == null)
-        //     {
-        //         // 隊列為空 → 關卡通關
-        //         LevelManager.OnLevelCleared();
-        //         yield break;
-        //     }
-        //     // 記錄 ArrivalSnapshot（相對變化條件基準）
-        // }
+        if (CustomerManager.Instance != null && !CustomerManager.Instance.HasCustomer)
+            CustomerManager.Instance.SpawnNextCustomer();
 
         yield break;
     }
