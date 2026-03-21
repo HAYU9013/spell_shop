@@ -151,6 +151,25 @@ public class CustomerInstance
     }
 
     // =========================================================
+    // UI 需求快照（供 GameFacade 建立 RequirementSnapshot）
+    // =========================================================
+
+    /// <summary>
+    /// 回傳每條需求的（進度文字, 是否滿足）列表。
+    /// 不修改 IsSatisfiedThisTurn，純讀取，可在任何時機呼叫。
+    /// </summary>
+    public List<(string displayText, bool isSatisfied)> GetRequirementStatuses(EnvironmentData currentEnv)
+    {
+        var results = new List<(string, bool)>();
+        for (int i = 0; i < _requirements.Count; i++)
+        {
+            var ctx = BuildContext(currentEnv, i);
+            results.Add((_requirements[i].GetProgressText(ctx), _requirements[i].IsSatisfied(ctx)));
+        }
+        return results;
+    }
+
+    // =========================================================
     // 工具
     // =========================================================
 

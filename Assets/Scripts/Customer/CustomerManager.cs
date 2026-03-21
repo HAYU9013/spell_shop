@@ -185,6 +185,12 @@ public class CustomerManager : MonoBehaviour
 
     public bool IsQueueEmpty => !_isEndlessMode && _queue.Count == 0 && _currentCustomer == null;
 
+    /// <summary>
+    /// 隊列中剩餘顧客數（不含當前顧客）。
+    /// 無限模式回傳 -1，UI 可顯示「∞」。
+    /// </summary>
+    public int RemainingInQueue => _isEndlessMode ? -1 : _queue.Count;
+
     /// <summary>取得當前顧客需求進度文字（供 UI 顯示）</summary>
     public List<string> GetCurrentProgressTexts()
     {
