@@ -31,13 +31,18 @@ public class EnvironmentResolveState : IGameState
     {
         Debug.Log("[Phase 5] EnvironmentResolve — Execute");
 
-        // TODO: ScrollProcessor 實作後取消注解，將 LastSubmit 傳入計算效果
-        // var submit = WorkbenchManager.Instance?.LastSubmit;
-        // if (submit != null)
-        // {
-        //     var effects = ScrollProcessor.Process(submit);
-        //     EnvironmentManager.Instance.ApplyEffects(effects);
-        // }
+        // 取得本回合送出的卷軸紀錄，計算並套用環境效果
+        var submit = WorkbenchManager.Instance?.LastSubmit;
+        if (submit != null)
+        {
+            var effects = ScrollProcessor.Process(submit);
+            if (effects.Count > 0)
+                EnvironmentManager.Instance?.ApplyEffects(effects);
+        }
+        else
+        {
+            Debug.LogWarning("[Phase 5] 無送出紀錄，跳過環境結算");
+        }
 
         // 更新顧客追蹤（累積 delta + 穩定性計數）
         CustomerManager.Instance?.UpdateCurrentTracking();
