@@ -137,6 +137,10 @@ public class ScrollsPileUI : MonoBehaviour
         SetText(card, "Title",      data.scrollName);
         SetText(card, "EffectText", data.GetModifierDescription());
         SetIcon(card, "Icon",       data.icon);
+
+        // 注入 ScrollCardUI（點擊選中 + 高亮）
+        var cardUI = card.GetComponent<ScrollCardUI>();
+        if (cardUI != null) cardUI.Setup(data);
     }
 
     private void SetText(GameObject root, string childName, string value)

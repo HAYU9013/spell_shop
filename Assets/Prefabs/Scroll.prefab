@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8408000747108766966}
+  - component: {fileID: 2906271702258086317}
   m_Layer: 0
   m_Name: Scroll
   m_TagString: Untagged
@@ -34,6 +35,19 @@ Transform:
   - {fileID: 7888106262245577511}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2906271702258086317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2042075915512037006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62c5fd0465d4e984281675c566547091, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selectedBorder: {fileID: 0}
 --- !u!1 &3142601113405621261
 GameObject:
   m_ObjectHideFlags: 0
@@ -99,7 +113,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "\u5377\u8EF8\u5377\u8EF8\u5377\u8EF8"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 72e64925ebc74614e9ae46964735f66f, type: 2}
   m_sharedMaterial: {fileID: 6857214624097882096, guid: 72e64925ebc74614e9ae46964735f66f, type: 2}
@@ -233,10 +247,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "\u5377\u8EF8\u5377\u8EF8\u5377\u8EF8"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 72e64925ebc74614e9ae46964735f66f, type: 2}
+  m_sharedMaterial: {fileID: 6857214624097882096, guid: 72e64925ebc74614e9ae46964735f66f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
