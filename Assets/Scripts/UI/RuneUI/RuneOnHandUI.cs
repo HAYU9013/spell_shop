@@ -135,6 +135,10 @@ public class RuneOnHandUI : MonoBehaviour
         SetText(card, "Title", data.runeName);
         SetText(card, "EffectText", data.GetEffectSummary());
         SetIcon(card, "Icon", data.icon);
+
+        // 文字改為 hover 顯示，直接隱藏卡片上的文字物件
+        HideChild(card, "Title");
+        HideChild(card, "EffectText");
     }
 
     private void SetText(GameObject root, string childName, string value)
@@ -161,6 +165,12 @@ public class RuneOnHandUI : MonoBehaviour
         if (img != null) img.sprite = sprite;
     }
 
+    private void HideChild(GameObject root, string childName)
+    {
+        var t = root.transform.Find(childName);
+        if (t != null) t.gameObject.SetActive(false);
+    }
+
     // =========================================================
     // 點擊互動設定
     // =========================================================
@@ -183,5 +193,11 @@ public class RuneOnHandUI : MonoBehaviour
             cardUI = iconTransform.gameObject.AddComponent<RuneCardUI>();
 
         cardUI.Setup(index, rune, card.transform);
+
+        // 掛上 Hover Tooltip（Icon 有 RaycastTarget，可接收 Pointer 事件）
+        var tooltip = iconTransform.GetComponent<HoverTooltipTrigger>();
+        if (tooltip == null)
+            tooltip = iconTransform.gameObject.AddComponent<HoverTooltipTrigger>();
+        tooltip.Setup(rune.runeName, rune.GetEffectSummary());
     }
 }

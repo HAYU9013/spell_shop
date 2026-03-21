@@ -21,4 +21,4 @@ MonoBehaviour:
   effects:
   - attribute: 0
     value: 1
-  discardOtherRunes: 0
+  discardOtherRunes: 1

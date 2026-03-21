@@ -13,8 +13,7 @@ using UnityEngine.UI;
 ///
 /// 點擊行為：
 ///   - 有符文的槽位 → RemoveRuneAt(slotIndex)，將符文退回手牌
-///   - 空槽 + 玩家已選中手牌符文 → PlaceRune()，放入選中的符文
-///   - 空槽 + 無選中 → 無動作
+///   - 空槽（不論是否已選符文）→ 委派給 OpenScrollUI.TryPlaceRune()
 ///
 /// UI 刷新流程（不直接更新，而是等事件）：
 ///   PlaceRune / RemoveRuneAt
@@ -34,8 +33,9 @@ public class SlotUI : MonoBehaviour, IPointerClickHandler
     [SerializeField] private Image      runeIcon;
     [SerializeField] private TMP_Text   runeNameText;
 
-    private int      _slotIndex;
-    private RuneData _currentRune;   // 追蹤目前內容，供動畫判斷
+    private int                _slotIndex;
+    private RuneData           _currentRune;   // 追蹤目前內容，供動畫判斷
+    private HoverTooltipTrigger _tooltip;
 
     // =========================================================
     // 生命週期
@@ -45,6 +45,13 @@ public class SlotUI : MonoBehaviour, IPointerClickHandler
     {
         // Prefab 在 Editor 的初始狀態不可靠，強制從 empty 開始
         ShowEmpty();
+
+        // runeNameText 改為 hover tooltip 顯示，永久隱藏
+        if (runeNameText != null) runeNameText.gameObject.SetActive(false);
+
+        _tooltip = GetComponent<HoverTooltipTrigger>();
+        if (_tooltip == null) _tooltip = gameObject.AddComponent<HoverTooltipTrigger>();
+        _tooltip.enabled = false;  // 預設關閉，有符文時才啟用
     }
 
     // =========================================================
@@ -70,8 +77,12 @@ public class SlotUI : MonoBehaviour, IPointerClickHandler
 
         if (nowFilled)
         {
-            if (runeIcon     != null) runeIcon.sprite   = runeData.icon;
-            if (runeNameText != null) runeNameText.text = runeData.runeName;
+            if (runeIcon != null) runeIcon.sprite = runeData.icon;
+            if (_tooltip != null)
+            {
+                _tooltip.Setup(runeData.runeName, runeData.GetEffectSummary());
+                _tooltip.enabled = true;
+            }
             ShowRune();
 
             // 剛從空到有符文 → 播放放入動畫
@@ -79,6 +90,7 @@ public class SlotUI : MonoBehaviour, IPointerClickHandler
         }
         else
         {
+            if (_tooltip != null) _tooltip.enabled = false;
             ShowEmpty();
 
             // 剛從有符文到空 → 播放退出動畫
@@ -108,12 +120,10 @@ public class SlotUI : MonoBehaviour, IPointerClickHandler
             GameFacade.Instance.RemoveRuneAt(_slotIndex);
             HandSelectionState.Deselect();
         }
-        else if (HandSelectionState.HasSelection)
+        else
         {
-            // 有選中符文 + 空槽 → 嘗試放入
-            // PlaceRune 回傳 false 表示槽位已全滿或符文不在手牌（理論上不會發生）
-            bool ok = GameFacade.Instance.PlaceRune(HandSelectionState.SelectedRuneData);
-            if (ok) HandSelectionState.Deselect();
+            // 空槽點擊 → 委派給 OpenScrollUI 統一處理放入邏輯
+            GetComponentInParent<OpenScrollUI>()?.TryPlaceRune();
         }
         // 空槽 + 無選中 → 玩家尚未選符文，無操作
     }

@@ -139,9 +139,18 @@ public class ScrollsPileUI : MonoBehaviour
         SetText(card, "EffectText", data.GetModifierDescription());
         SetIcon(card, "Icon",       data.icon);
 
+        // 文字改為 hover 顯示，直接隱藏卡片上的文字物件
+        HideChild(card, "Title");
+        HideChild(card, "EffectText");
+
         // 注入 ScrollCardUI（點擊選中 + 高亮）
         var cardUI = card.GetComponent<ScrollCardUI>();
         if (cardUI != null) cardUI.Setup(data);
+
+        // 掛上 Hover Tooltip
+        var tooltip = card.GetComponent<HoverTooltipTrigger>();
+        if (tooltip == null) tooltip = card.AddComponent<HoverTooltipTrigger>();
+        tooltip.Setup(data.scrollName, data.GetModifierDescription());
     }
 
     private void SetText(GameObject root, string childName, string value)
@@ -166,5 +175,11 @@ public class ScrollsPileUI : MonoBehaviour
         }
         var img = t.GetComponent<Image>();
         if (img != null) img.sprite = sprite;
+    }
+
+    private void HideChild(GameObject root, string childName)
+    {
+        var t = root.transform.Find(childName);
+        if (t != null) t.gameObject.SetActive(false);
     }
 }

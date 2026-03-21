@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
@@ -21,7 +22,7 @@ using UnityEngine.UI;
 ///   slotContainer   → Slot prefab 生成的父容器（建議掛 HorizontalLayoutGroup）
 ///   slotPrefab      → 掛有 SlotUI 的 prefab
 /// </summary>
-public class OpenScrollUI : MonoBehaviour
+public class OpenScrollUI : MonoBehaviour, IPointerClickHandler
 {
     [Header("空 / 非空 切換")]
     [SerializeField] private GameObject emptyView;
@@ -149,7 +150,7 @@ public class OpenScrollUI : MonoBehaviour
     private void FillScrollInfo(ScrollData data)
     {
         if (scrollNameText   != null) scrollNameText.text   = data.scrollName;
-        if (scrollEffectText != null) scrollEffectText.text = data.GetModifierDescription();
+        if (scrollEffectText != null) scrollEffectText.text = data.description;
         if (scrollIcon       != null) scrollIcon.sprite     = data.icon;
     }
 
@@ -210,6 +211,21 @@ public class OpenScrollUI : MonoBehaviour
             _slots[i].transform.SetSiblingIndex(i);
         }
     }
+
+    // =========================================================
+    // 放入符文（由 SlotUI 空槽點擊或卷軸背景點擊呼叫）
+    // =========================================================
+
+    public void TryPlaceRune()
+    {
+        if (GameFacade.Instance == null) return;
+        if (!HandSelectionState.HasSelection) return;
+
+        bool ok = GameFacade.Instance.PlaceRune(HandSelectionState.SelectedRuneData);
+        if (ok) HandSelectionState.Deselect();
+    }
+
+    public void OnPointerClick(PointerEventData _) => TryPlaceRune();
 
     // =========================================================
     // Empty / NotEmpty 切換
