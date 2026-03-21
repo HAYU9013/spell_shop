@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 559c063922447c54d96bddbeedbdcf51, type: 3}
+  m_Name: BrightHead
+  m_EditorClassIdentifier: 
+  customerName: "\u5149\u982D"
+  flavorText: "\u66971"
+  portrait: {fileID: 21300000, guid: aa925edbfe657ad45878f23253d22015, type: 3}
+  requirements:
+  - type: 1
+    attribute: 0
+    compareOp: 1
+    targetValue: 1
+    targetValueMax: 0
+    requiredDelta: 1
+    stabilityTurns: 0
+  maxPatience: 3
+  scoreReward: 10
+  scorePenalty: 5
+  bonusRewards: []

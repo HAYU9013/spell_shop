@@ -76,10 +76,10 @@ public class EnvironmentManager : MonoBehaviour
     // 只讀屬性
     // =========================================================
 
-    public int Brightness   => _env.brightness;
-    public int Moisture     => _env.moisture;
-    public int Temperature  => _env.temperature;
-    public int Score        => _env.score;
+    public int Brightness => _env.brightness;
+    public int Moisture => _env.moisture;
+    public int Temperature => _env.temperature;
+    public int Score => _env.score;
     public bool IsScoreZero => _env.score <= 0;
 
     public int GetValue(EnvAttribute attr) => _env.GetValue(attr);
@@ -276,8 +276,8 @@ public class EnvironmentManager : MonoBehaviour
     {
         _env = new EnvironmentData();
         _history.Clear();
-        OnValueChanged?.Invoke(EnvAttribute.Brightness,  _env.brightness);
-        OnValueChanged?.Invoke(EnvAttribute.Moisture,    _env.moisture);
+        OnValueChanged?.Invoke(EnvAttribute.Brightness, _env.brightness);
+        OnValueChanged?.Invoke(EnvAttribute.Moisture, _env.moisture);
         OnValueChanged?.Invoke(EnvAttribute.Temperature, _env.temperature);
         OnScoreChanged?.Invoke(_env.score);
     }
@@ -349,5 +349,38 @@ public class EnvironmentManager : MonoBehaviour
         }
         ModifyScore(-10);
         Debug.Log($"[EnvironmentManager] 業績 -10 → 現在 {_env.score}");
+    }
+
+    [ContextMenu("Debug_Brightness+1")]
+    private void Debug_BrightnessIncrease() => Debug_ChangeEnv(EnvAttribute.Brightness, 1);
+
+    [ContextMenu("Debug_Brightness-1")]
+    private void Debug_BrightnessDecrease() => Debug_ChangeEnv(EnvAttribute.Brightness, -1);
+
+    [ContextMenu("Debug_Moisture+1")]
+    private void Debug_MoistureIncrease() => Debug_ChangeEnv(EnvAttribute.Moisture, 1);
+
+    [ContextMenu("Debug_Moisture-1")]
+    private void Debug_MoistureDecrease() => Debug_ChangeEnv(EnvAttribute.Moisture, -1);
+
+    [ContextMenu("Debug_Temperature+1")]
+    private void Debug_TemperatureIncrease() => Debug_ChangeEnv(EnvAttribute.Temperature, 1);
+
+    [ContextMenu("Debug_Temperature-1")]
+    private void Debug_TemperatureDecrease() => Debug_ChangeEnv(EnvAttribute.Temperature, -1);
+
+    [ContextMenu("Debug_Score+10")]
+    private void Debug_ScorePlus10()
+    {
+        if (!Application.isPlaying) { Debug.LogWarning("請在 Play Mode 下使用"); return; }
+        ModifyScore(10);
+        Debug.Log($"[EnvironmentManager] 業績 +10 → 現在 {_env.score}");
+    }
+
+    private void Debug_ChangeEnv(EnvAttribute attr, int delta)
+    {
+        if (!Application.isPlaying) { Debug.LogWarning("請在 Play Mode 下使用"); return; }
+        ApplyEffects(new List<RuneEffect> { new RuneEffect { attribute = attr, value = delta } });
+        Debug.Log($"[EnvironmentManager] {attr} {(delta > 0 ? "+" : "")}{delta} → 現在 {_env.GetValue(attr)}");
     }
 }
