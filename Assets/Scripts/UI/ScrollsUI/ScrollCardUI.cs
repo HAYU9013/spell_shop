@@ -94,15 +94,13 @@ public class ScrollCardUI : MonoBehaviour, IPointerClickHandler
     {
         if (selectedBorder != null) selectedBorder.enabled = true;
         transform.DOKill();
-        transform.localScale = Vector3.one * 1.05f;
-        // TODO: DOTween transform.DOScale(1.05f, 0.15f).SetEase(Ease.OutBack);
+        transform.DOScale(1.05f, 0.15f).SetEase(Ease.OutBack).SetLink(gameObject);
     }
 
     private void AnimDeselect()
     {
         if (selectedBorder != null) selectedBorder.enabled = false;
         transform.DOKill();
-        transform.localScale = Vector3.one;
-        // TODO: DOTween transform.DOScale(1f, 0.1f);
+        transform.DOScale(1f, 0.1f).SetEase(Ease.OutQuad).SetLink(gameObject);
     }
 }

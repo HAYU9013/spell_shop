@@ -1,4 +1,5 @@
 using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 public class CustomerUI : MonoBehaviour
 {
     [SerializeField] private GameObject customerPrefab;
+    [SerializeField] private OpenDeskUI openDeskUI;
 
     private GameObject _instance;
     private bool _subscribed;
@@ -103,7 +105,8 @@ public class CustomerUI : MonoBehaviour
         {
             if (_instance != null)
             {
-                Debug.Log("[CustomerUI] 顧客離開，移除 prefab instance");
+                Debug.Log("[CustomerUI] 顧客離開，播放離場動畫");
+                openDeskUI?.Close();
                 Destroy(_instance);
                 _instance = null;
             }
@@ -119,6 +122,7 @@ public class CustomerUI : MonoBehaviour
             }
             _instance = Instantiate(customerPrefab, transform);
             Debug.Log($"[CustomerUI] Instantiate 顧客 prefab → {snapshot.Name}");
+
         }
 
         SetText(_instance, "name", snapshot.Name);

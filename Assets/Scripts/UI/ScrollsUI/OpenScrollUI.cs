@@ -217,22 +217,27 @@ public class OpenScrollUI : MonoBehaviour
 
     private void SetEmpty()
     {
-        if (emptyView    != null) emptyView.SetActive(true);
-        if (notEmptyView != null) notEmptyView.SetActive(false);
-        // TODO: DOTween AnimClose — notEmptyView.transform.DOScale(0.85f, 0.15f).SetEase(Ease.InBack)
-        //       .OnComplete(() => notEmptyView.SetActive(false))
+        if (emptyView != null) emptyView.SetActive(true);
+        if (notEmptyView != null && notEmptyView.activeSelf)
+        {
+            notEmptyView.transform.DOKill();
+            notEmptyView.transform.DOScale(0.85f, 0.15f)
+                .SetEase(Ease.InBack)
+                .SetLink(notEmptyView)
+                .OnComplete(() => notEmptyView.SetActive(false));
+        }
     }
 
     private void SetNotEmpty()
     {
-        if (emptyView    != null) emptyView.SetActive(false);
+        if (emptyView != null) emptyView.SetActive(false);
 
         if (notEmptyView != null && !notEmptyView.activeSelf)
         {
             notEmptyView.SetActive(true);
             notEmptyView.transform.DOKill();
-            notEmptyView.transform.localScale = Vector3.one;
-            // TODO: DOTween notEmptyView.transform.DOScale(1f, 0.2f).From(0.85f).SetEase(Ease.OutBack)
+            notEmptyView.transform.localScale = Vector3.one * 0.85f;
+            notEmptyView.transform.DOScale(1f, 0.2f).SetEase(Ease.OutBack).SetLink(notEmptyView);
         }
     }
 }

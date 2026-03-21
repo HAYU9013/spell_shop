@@ -141,13 +141,12 @@ public class SlotUI : MonoBehaviour, IPointerClickHandler
     private void AnimFill()
     {
         transform.DOKill();
-        transform.localScale = Vector3.one;
-        // TODO: DOTween transform.DOPunchScale(Vector3.one * 0.2f, 0.3f, 5, 0.5f);
+        transform.DOPunchScale(Vector3.one * 0.2f, 0.3f, 5, 0.5f).SetLink(gameObject);
     }
 
     private void AnimEmpty()
     {
         transform.DOKill();
-        // TODO: DOTween transform.DOShakePosition(0.15f, strength: 3f, vibrato: 10);
+        transform.DOShakePosition(0.15f, strength: 3f, vibrato: 10).SetLink(gameObject);
     }
 }

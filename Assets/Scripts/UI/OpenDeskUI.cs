@@ -1,11 +1,21 @@
 using UnityEngine;
-using DG.Tweening; // 預留 DOTween 命名空間
+using DG.Tweening;
 
 public class OpenDeskUI : MonoBehaviour
 {
     [Header("Settings")]
     [SerializeField] private GameObject deskUI;
     [SerializeField] private float fadeDuration = 0.3f;
+
+    private RectTransform _deskRT;
+    private float _targetY;
+
+    private void Awake()
+    {
+        _deskRT = deskUI != null ? deskUI.GetComponent<RectTransform>() : null;
+        if (_deskRT != null)
+            _targetY = _deskRT.anchoredPosition.y;
+    }
 
     /// <summary>
     /// 切換 DeskUI 顯示狀態
@@ -14,28 +24,34 @@ public class OpenDeskUI : MonoBehaviour
     {
         if (deskUI == null) return;
 
-        bool isActive = !deskUI.activeSelf;
-
-        if (isActive)
-        {
+        if (!deskUI.activeSelf)
             Open();
-        }
         else
-        {
             Close();
-        }
     }
 
     private void Open()
     {
+        _deskRT.DOKill();
         deskUI.SetActive(true);
-        // 未來 DOTween 動畫可寫在此處，例如：
-        deskUI.transform.DOScale(1, fadeDuration).From(0);
+
+        float height = _deskRT.rect.height;
+        _deskRT.anchoredPosition = new Vector2(_deskRT.anchoredPosition.x, _targetY - height);
+        _deskRT.DOAnchorPosY(_targetY, fadeDuration).SetEase(Ease.OutCubic).SetLink(deskUI);
     }
 
-    private void Close()
+    public void Close()
     {
-        // 若要等待動畫結束再 SetActive(false)，可使用 DOTween 回呼
-        deskUI.SetActive(false);
+        _deskRT.DOKill();
+
+        float height = _deskRT.rect.height;
+        _deskRT.DOAnchorPosY(_targetY - height, fadeDuration * 0.75f)
+            .SetEase(Ease.InCubic)
+            .SetLink(deskUI)
+            .OnComplete(() =>
+            {
+                deskUI.SetActive(false);
+                _deskRT.anchoredPosition = new Vector2(_deskRT.anchoredPosition.x, _targetY);
+            });
     }
 }

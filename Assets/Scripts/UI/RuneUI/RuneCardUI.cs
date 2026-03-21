@@ -102,16 +102,14 @@ public class RuneCardUI : MonoBehaviour, IPointerClickHandler
     private void AnimSelect()
     {
         if (_cardRoot == null) return;
-        _cardRoot.DOKill();  // 停止正在播放的 tween，防止衝突
-        _cardRoot.localScale = Vector3.one * 1.1f;
-        // TODO: DOTween _cardRoot.DOScale(1.1f, 0.12f).SetEase(Ease.OutBack);
+        _cardRoot.DOKill();
+        _cardRoot.DOScale(1.1f, 0.12f).SetEase(Ease.OutBack).SetLink(_cardRoot.gameObject);
     }
 
     private void AnimDeselect()
     {
         if (_cardRoot == null) return;
         _cardRoot.DOKill();
-        _cardRoot.localScale = Vector3.one;
-        // TODO: DOTween _cardRoot.DOScale(1f, 0.1f);
+        _cardRoot.DOScale(1f, 0.1f).SetEase(Ease.OutQuad).SetLink(_cardRoot.gameObject);
     }
 }

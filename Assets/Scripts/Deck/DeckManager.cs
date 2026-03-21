@@ -236,6 +236,24 @@ public class DeckManager : MonoBehaviour
             Debug.Log($"  手牌：{r}");
     }
 
+    [ContextMenu("Debug_PrintDrawPile")]
+    private void Debug_PrintDrawPile()
+    {
+        if (!Application.isPlaying) { Debug.LogWarning("請在 Play Mode 下使用"); return; }
+        Debug.Log($"[DeckManager] 抽牌堆（{_drawPile.Count} 張，尚未抽到）：");
+        for (int i = _drawPile.Count - 1; i >= 0; i--)
+            Debug.Log($"  [{_drawPile.Count - 1 - i + 1}] {_drawPile[i].Data.runeName}");
+    }
+
+    [ContextMenu("Debug_PrintDiscardPile")]
+    private void Debug_PrintDiscardPile()
+    {
+        if (!Application.isPlaying) { Debug.LogWarning("請在 Play Mode 下使用"); return; }
+        Debug.Log($"[DeckManager] 棄牌堆（{_discardPile.Count} 張，已出過）：");
+        for (int i = _discardPile.Count - 1; i >= 0; i--)
+            Debug.Log($"  [{_discardPile.Count - 1 - i + 1}] {_discardPile[i].Data.runeName}");
+    }
+
     [ContextMenu("Debug_DrawHand")]
     private void Debug_DrawHand()
     {
