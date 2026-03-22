@@ -17,9 +17,9 @@ MonoBehaviour:
   icon: {fileID: -1994697035, guid: 104e62864a2afc9418223804a651ce12, type: 3}
   displayOrder: 0
   satisfiedConditions:
-  - attribute: 0
-    compareOp: 0
-    targetValue: 2
+  - attribute: 1
+    compareOp: 1
+    targetValue: 7
     rangeMin: 0
     rangeMax: 0
   conditionLogic: 0
@@ -28,8 +28,8 @@ MonoBehaviour:
     value: 0
   satisfiedScoreChange: 0
   satisfiedRewards:
-  - type: 0
-    scoreAmount: 0
+  - type: 4
+    scoreAmount: 3
     runePool:
     - {fileID: 11400000, guid: b61cc8256cc418043853385a3f18d24e, type: 2}
     - {fileID: 11400000, guid: b61cc8256cc418043853385a3f18d24e, type: 2}
@@ -40,10 +40,24 @@ MonoBehaviour:
     specificRune: {fileID: 11400000, guid: b61cc8256cc418043853385a3f18d24e, type: 2}
     scrollPool: []
     scrollCount: 0
-  unsatisfiedEnvEffects: []
-  unsatisfiedScoreChange: 0
-  unsatisfiedLimit: 2
-  punishmentType: 0
+  - type: 0
+    scoreAmount: 3
+    runePool:
+    - {fileID: 11400000, guid: ff88fcae1ef662649bb0d5e86bcb7791, type: 2}
+    - {fileID: 11400000, guid: ff88fcae1ef662649bb0d5e86bcb7791, type: 2}
+    - {fileID: 11400000, guid: b61cc8256cc418043853385a3f18d24e, type: 2}
+    - {fileID: 11400000, guid: dba9fb0dc6ae9254ca52057e3620a901, type: 2}
+    - {fileID: 11400000, guid: 62297c6bc8868224193f7cbdde99e1e0, type: 2}
+    runeCount: 2
+    specificRune: {fileID: 11400000, guid: b61cc8256cc418043853385a3f18d24e, type: 2}
+    scrollPool: []
+    scrollCount: 0
+  unsatisfiedEnvEffects:
+  - attribute: 0
+    value: -5
+  unsatisfiedScoreChange: -5
+  unsatisfiedLimit: 3
+  punishmentType: 3
   shockAttribute: 0
   shockValue: 8
   shockIsForceSet: 0

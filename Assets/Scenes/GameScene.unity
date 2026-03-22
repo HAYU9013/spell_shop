@@ -1995,8 +1995,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 180}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: 8.7322, y: 180}
+  m_SizeDelta: {x: 789.415, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &470554496
 MonoBehaviour:
@@ -2028,7 +2028,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294007621
-  m_fontColor: {r: 0.27144888, g: 0.35555476, b: 0.9433962, a: 1}
+  m_fontColor: {r: 0.13300997, g: 0.19010186, b: 0.5754717, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2052,7 +2052,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -5379,8 +5379,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ff88fcae1ef662649bb0d5e86bcb7791, type: 2}
   - {fileID: 11400000, guid: ff88fcae1ef662649bb0d5e86bcb7791, type: 2}
   _initialScrolls:
-  - {fileID: 11400000, guid: da959135b69620b4b88a828667ee40d5, type: 2}
-  - {fileID: 11400000, guid: a22b081bc55a3e44da231114712d5804, type: 2}
+  - {fileID: 11400000, guid: a3cc7150df4d63d49b2a7f07e79bf6e8, type: 2}
+  - {fileID: 11400000, guid: eea4eab3afa3553479b35d49c19895e6, type: 2}
+  - {fileID: 11400000, guid: c94d633224495434784510c35f9eaf90, type: 2}
   _initialRelics:
   - {fileID: 11400000, guid: 320448a9c4a9b884b9f58af87e891dc7, type: 2}
   _levelQueue:

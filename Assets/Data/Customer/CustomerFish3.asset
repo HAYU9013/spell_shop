@@ -27,7 +27,7 @@ MonoBehaviour:
   scoreReward: 3
   scorePenalty: 1
   bonusRewards:
-  - type: 0
+  - type: 2
     scoreAmount: 0
     runePool:
     - {fileID: 11400000, guid: 159c9eec0bb4d094ca4906955fca7d7c, type: 2}
@@ -35,13 +35,10 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 3f23dbccd1985cb41bf38961acfdbef1, type: 2}
     - {fileID: 11400000, guid: 62297c6bc8868224193f7cbdde99e1e0, type: 2}
     - {fileID: 11400000, guid: ad2f5a69580b2974f8a9c5d71910e66c, type: 2}
-    - {fileID: 11400000, guid: 9b1e015cf7f62154ebe9c982697f231a, type: 2}
-    - {fileID: 11400000, guid: cbbec1bdd022da24aa5ea35d79e3ae6a, type: 2}
-    - {fileID: 11400000, guid: 69134ea6b04348149bade72592a03fc8, type: 2}
-    - {fileID: 11400000, guid: 983ce9ae9bbdc1e459c16cbb592e9bfd, type: 2}
-    - {fileID: 11400000, guid: 43f70ab6b0c1ee4409905607b5395405, type: 2}
-    - {fileID: 11400000, guid: 9016636b05c1e5449a1fbc71768d8b19, type: 2}
     runeCount: 2
     specificRune: {fileID: 0}
-    scrollPool: []
+    scrollPool:
+    - {fileID: 11400000, guid: 2c25c4cafd110954382380ab6342f7bc, type: 2}
+    - {fileID: 11400000, guid: 35ef07eca5f543a4b837733e985407a9, type: 2}
+    - {fileID: 11400000, guid: 142ef905930b2224c90a01cfb9249f49, type: 2}
     scrollCount: 0

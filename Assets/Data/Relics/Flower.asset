@@ -12,36 +12,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e431d6a989fab2d48956a54395fcd7d6, type: 3}
   m_Name: Flower
   m_EditorClassIdentifier: 
-  relicName: "\u65B0\u907A\u7269"
+  relicName: "\u5C0F\u9EC3\u82B1"
   description: 
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: c7125f1d5054c0946961161a1b1b2874, type: 3}
   displayOrder: 0
   satisfiedConditions:
+  - attribute: 0
+    compareOp: 0
+    targetValue: 3
+    rangeMin: 0
+    rangeMax: 0
   - attribute: 1
-    compareOp: 2
+    compareOp: 0
     targetValue: 3
     rangeMin: 0
     rangeMax: 0
   conditionLogic: 0
-  satisfiedEnvEffects: []
-  satisfiedScoreChange: 0
+  satisfiedEnvEffects:
+  - attribute: 2
+    value: 1
+  satisfiedScoreChange: 1
   satisfiedRewards:
   - type: 0
     scoreAmount: 0
     runePool:
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    - {fileID: 0}
-    runeCount: 5
+    - {fileID: 11400000, guid: ff88fcae1ef662649bb0d5e86bcb7791, type: 2}
+    - {fileID: 11400000, guid: a93ea0f99b8a55a45a5492ae3445b9cf, type: 2}
+    - {fileID: 11400000, guid: b61cc8256cc418043853385a3f18d24e, type: 2}
+    - {fileID: 11400000, guid: dc0829bddf8b9cc40b23de671e7adeda, type: 2}
+    - {fileID: 11400000, guid: dba9fb0dc6ae9254ca52057e3620a901, type: 2}
+    runeCount: 2
     specificRune: {fileID: 0}
     scrollPool: []
     scrollCount: 0
   unsatisfiedEnvEffects: []
   unsatisfiedScoreChange: 0
-  unsatisfiedLimit: 3
-  punishmentType: 0
+  unsatisfiedLimit: 2
+  punishmentType: 3
   shockAttribute: 0
   shockValue: -5
   shockIsForceSet: 0

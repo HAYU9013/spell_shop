@@ -34,7 +34,7 @@ MonoBehaviour:
   scoreReward: 5
   scorePenalty: 2
   bonusRewards:
-  - type: 0
+  - type: 2
     scoreAmount: 0
     runePool:
     - {fileID: 11400000, guid: 704420b89e59f494a8edfb6880950f23, type: 2}
@@ -54,5 +54,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 7f53060538fb076469c7ff08389df7c7, type: 2}
     runeCount: 3
     specificRune: {fileID: 0}
-    scrollPool: []
+    scrollPool:
+    - {fileID: 11400000, guid: 142ef905930b2224c90a01cfb9249f49, type: 2}
+    - {fileID: 11400000, guid: 35ef07eca5f543a4b837733e985407a9, type: 2}
+    - {fileID: 11400000, guid: 2c25c4cafd110954382380ab6342f7bc, type: 2}
     scrollCount: 0
