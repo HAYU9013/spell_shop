@@ -12,17 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5237a694ba1306408aa50900d5231da, type: 3}
   m_Name: 25IceAge
   m_EditorClassIdentifier: 
-  runeName: "\u71BE\u7130"
-  description: "\u70C8\u7130\u71C3\u71D2\uFF0C\u63D0\u5347\u5149\u8207\u6EAB\u5EA6\uFF0C\u84B8\u767C\u6C34\u5206\u3002"
-  icon: {fileID: 0}
-  rarity: 1
+  runeName: "\u51B0\u6CB3\u4E4B\u7B26\u6587"
+  description: "\u4F60\u662F\u9752\u96C9?\n\u6EAB\u5EA6-3"
+  icon: {fileID: 21300000, guid: 2be5b9e29dff3fe4d9199fea9d5769fd, type: 3}
+  rarity: 2
   runeType: 0
-  tags: 6
+  tags: 16
   effects:
-  - attribute: 0
-    value: 1
-  - attribute: 1
-    value: -1
   - attribute: 2
-    value: 1
+    value: -3
   discardOtherRunes: 0

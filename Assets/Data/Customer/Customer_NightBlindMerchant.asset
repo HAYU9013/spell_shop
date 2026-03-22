@@ -26,4 +26,11 @@ MonoBehaviour:
   maxPatience: 1
   scoreReward: 20
   scorePenalty: 8
-  bonusRewards: []
+  bonusRewards:
+  - type: 3
+    scoreAmount: 0
+    runePool: []
+    runeCount: 0
+    specificRune: {fileID: 0}
+    scrollPool: []
+    scrollCount: 0

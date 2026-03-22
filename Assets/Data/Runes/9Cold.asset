@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5237a694ba1306408aa50900d5231da, type: 3}
   m_Name: 9Cold
   m_EditorClassIdentifier: 
-  runeName: "\u8150\u6557"
-  description: "\u8150\u6557\u8513\u5EF6\uFF0C\u906E\u853D\u5149\u7DDA\u537B\u589E\u52A0\u6FD5\u6C23\u3002"
+  runeName: "\u5BD2\u4E4B\u7B26\u6587"
+  description: "\u523A\u9AA8\u7684\u5BD2\u610F\n\u6C34\u5206-1\n\u6EAB\u5EA6-1"
   icon: {fileID: 0}
   rarity: 1
   runeType: 0
-  tags: 9
+  tags: 34
   effects:
-  - attribute: 0
-    value: -4
   - attribute: 1
-    value: 2
+    value: -1
+  - attribute: 2
+    value: -1
   discardOtherRunes: 0

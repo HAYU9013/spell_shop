@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5237a694ba1306408aa50900d5231da, type: 3}
   m_Name: 15Burnt
   m_EditorClassIdentifier: 
-  runeName: "\u7A40\u96E8"
-  description: "\u6625\u96E8\u7DBF\u7DBF\uFF0C\u906E\u5149\u5E36\u4F86\u5927\u91CF\u6C34\u5206\u3002"
-  icon: {fileID: 0}
+  runeName: "\u7126\u4E4B\u7B26\u6587"
+  description: "\u7099\u71B1\n\u6C34\u5206-2\n\u6EAB\u5EA6+1"
+  icon: {fileID: 21300000, guid: 726be87257652cf488066f545089de36, type: 3}
   rarity: 1
   runeType: 0
-  tags: 9
+  tags: 34
   effects:
-  - attribute: 0
-    value: -3
   - attribute: 1
-    value: 4
+    value: -2
+  - attribute: 2
+    value: 1
   discardOtherRunes: 0

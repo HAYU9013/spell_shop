@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5237a694ba1306408aa50900d5231da, type: 3}
   m_Name: 14Rain
   m_EditorClassIdentifier: 
-  runeName: "\u51B0\u6CB3"
-  description: "\u51B0\u6CB3\u6D41\u52D5\uFF0C\u6EAB\u5EA6\u6025\u901F\u4E0B\u964D\u3002"
-  icon: {fileID: 0}
-  rarity: 0
+  runeName: "\u7A40\u96E8\u4E4B\u7B26\u6587"
+  description: "\u9019\u5C31\u662F\u6ECB\u6F64\n\u4EAE\u5EA6-3\n\u6C34\u5206+4"
+  icon: {fileID: 21300000, guid: 70a2ced3431def54b9ef11b75a582b10, type: 3}
+  rarity: 1
   runeType: 0
-  tags: 16
+  tags: 9
   effects:
-  - attribute: 2
+  - attribute: 0
     value: -3
+  - attribute: 1
+    value: 4
   discardOtherRunes: 0

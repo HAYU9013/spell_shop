@@ -12,13 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5237a694ba1306408aa50900d5231da, type: 3}
   m_Name: 28Foehn
   m_EditorClassIdentifier: 
-  runeName: "\u571F"
-  description: "\u5438\u6536\u6C34\u5206\uFF0C\u4F7F\u74B0\u5883\u4E7E\u71E5\u3002"
+  runeName: "\u711A\u98A8\u4E4B\u7B26\u6587"
+  description: "\u5927\u5730\u5439\u8D77\u4E86\u61A4\u6012\u4E4B\u98A8\n\u6C34\u5206-2\n\u6EAB\u5EA6+2"
   icon: {fileID: 0}
-  rarity: 0
+  rarity: 2
   runeType: 0
-  tags: 32
+  tags: 34
   effects:
   - attribute: 1
-    value: -1
+    value: -2
+  - attribute: 2
+    value: 2
   discardOtherRunes: 0

@@ -17,7 +17,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 836f5a6c56b9b2c44af9d1dc4ef03803, type: 3}
   rarity: 1
   runeType: 0
-  tags: 24
+  tags: 36
   effects:
   - attribute: 0
     value: 3

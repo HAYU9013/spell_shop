@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5237a694ba1306408aa50900d5231da, type: 3}
   m_Name: 22FireFire
   m_EditorClassIdentifier: 
-  runeName: "\u6708\u8755"
-  description: "\u6708\u8755\u7C60\u7F69\uFF0C\u5149\u8207\u6EAB\u5EA6\u540C\u6642\u4E0B\u964D\u3002"
-  icon: {fileID: 0}
-  rarity: 0
+  runeName: "\u7099\u7130\u4E4B\u7B26\u6587"
+  description: "\u6211\u6709\u9EDE\u61F6\u5F97\u63B0\u4E86\n\u4EAE\u5EA6+1\n\u6C34\u5206-1\n\u6EAB\u5EA6+1"
+  icon: {fileID: 21300000, guid: 534bb141a62e6864e86951390906c4fd, type: 3}
+  rarity: 2
   runeType: 0
-  tags: 24
+  tags: 38
   effects:
   - attribute: 0
     value: -1

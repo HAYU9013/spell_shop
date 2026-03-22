@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5237a694ba1306408aa50900d5231da, type: 3}
   m_Name: 11Evaporate
   m_EditorClassIdentifier: 
-  runeName: "\u9918\u71FC"
-  description: "\u6B98\u7559\u7684\u706B\u661F\uFF0C\u540C\u6642\u7167\u4EAE\u4E26\u52A0\u6EAB\u3002"
-  icon: {fileID: 0}
-  rarity: 0
+  runeName: "\u84B8\u767C\u4E4B\u7B26\u6587"
+  description: "\u9010\u6F38\u5347\u6EAB\n\u6C34\u5206-3\n\u6EAB\u5EA6+4"
+  icon: {fileID: 21300000, guid: cff7b9f02da1a0247bdab1a7a752a393, type: 3}
+  rarity: 1
   runeType: 0
-  tags: 6
+  tags: 34
   effects:
-  - attribute: 0
-    value: 1
+  - attribute: 1
+    value: -3
   - attribute: 2
-    value: 1
+    value: 4
   discardOtherRunes: 0

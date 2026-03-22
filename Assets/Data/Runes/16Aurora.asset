@@ -12,15 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5237a694ba1306408aa50900d5231da, type: 3}
   m_Name: 16Aurora
   m_EditorClassIdentifier: 
-  runeName: "\u751F\u9577"
-  description: "\u842C\u7269\u840C\u82BD\uFF0C\u5149\u8207\u6C34\u540C\u6B65\u4E0A\u5347\u3002"
-  icon: {fileID: 0}
-  rarity: 0
+  runeName: "\u6975\u5149\u4E4B\u7B26\u6587"
+  description: "\u7167\u8000\u591C\u7A7A\n\u4EAE\u5EA6+2"
+  icon: {fileID: 21300000, guid: b80471e2aeadaf748b07abb75e222e52, type: 3}
+  rarity: 1
   runeType: 0
-  tags: 5
+  tags: 4
   effects:
   - attribute: 0
-    value: 1
-  - attribute: 1
-    value: 1
+    value: 2
   discardOtherRunes: 0
