@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 559c063922447c54d96bddbeedbdcf51, type: 3}
+  m_Name: CustomerFish4
+  m_EditorClassIdentifier: 
+  customerName: "\u9B5A\u56DB\u865F"
+  flavorText: "(\u770B\u5411\u6C34\u676F)"
+  portrait: {fileID: 21300000, guid: e90f89aedef814445864e6c38ef4626d, type: 3}
+  requirements:
+  - type: 1
+    attribute: 1
+    compareOp: 0
+    targetValue: 6
+    targetValueMax: 0
+    requiredDelta: 2
+    stabilityTurns: 0
+  maxPatience: 3
+  scoreReward: 5
+  scorePenalty: 2
+  bonusRewards:
+  - type: 0
+    scoreAmount: 0
+    runePool:
+    - {fileID: 11400000, guid: 159c9eec0bb4d094ca4906955fca7d7c, type: 2}
+    - {fileID: 11400000, guid: 282fdf80b2032ab4dae8f709a057b0de, type: 2}
+    - {fileID: 11400000, guid: 3f23dbccd1985cb41bf38961acfdbef1, type: 2}
+    - {fileID: 11400000, guid: 62297c6bc8868224193f7cbdde99e1e0, type: 2}
+    - {fileID: 11400000, guid: ad2f5a69580b2974f8a9c5d71910e66c, type: 2}
+    - {fileID: 11400000, guid: 9b1e015cf7f62154ebe9c982697f231a, type: 2}
+    - {fileID: 11400000, guid: cbbec1bdd022da24aa5ea35d79e3ae6a, type: 2}
+    - {fileID: 11400000, guid: 69134ea6b04348149bade72592a03fc8, type: 2}
+    - {fileID: 11400000, guid: 983ce9ae9bbdc1e459c16cbb592e9bfd, type: 2}
+    - {fileID: 11400000, guid: 43f70ab6b0c1ee4409905607b5395405, type: 2}
+    - {fileID: 11400000, guid: 9016636b05c1e5449a1fbc71768d8b19, type: 2}
+    - {fileID: 11400000, guid: 2a1753b2d63502e45b1f546293fc02ab, type: 2}
+    - {fileID: 11400000, guid: dd161f22b355ed7478d1d940227d01f9, type: 2}
+    - {fileID: 11400000, guid: 97f1e41585808c24a8a0a2d74cdc4d31, type: 2}
+    - {fileID: 11400000, guid: 7f53060538fb076469c7ff08389df7c7, type: 2}
+    runeCount: 3
+    specificRune: {fileID: 0}
+    scrollPool: []
+    scrollCount: 0
