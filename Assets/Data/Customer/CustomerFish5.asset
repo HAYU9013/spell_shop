@@ -13,15 +13,22 @@ MonoBehaviour:
   m_Name: CustomerFish5
   m_EditorClassIdentifier: 
   customerName: "\u9B5A\u516D\u865F"
-  flavorText: "\u5168\u7403\u6696\u5316\uFF0C\u5F9E\u4F60\u6211\u505A\u8D77"
+  flavorText: "\u6211\u60F3\u84CB\u4E00\u9593\u6851\u62FF\u623F\uFF0C\u80FD\u505A\u6E05\u84B8\u7684\u90A3\u4E00\u7A2E"
   portrait: {fileID: 21300000, guid: e90f89aedef814445864e6c38ef4626d, type: 3}
   requirements:
+  - type: 1
+    attribute: 1
+    compareOp: 0
+    targetValue: 10
+    targetValueMax: 0
+    requiredDelta: 1
+    stabilityTurns: 0
   - type: 1
     attribute: 2
     compareOp: 0
     targetValue: 10
     targetValueMax: 0
-    requiredDelta: 2
+    requiredDelta: 1
     stabilityTurns: 0
   maxPatience: 3
   scoreReward: 5
@@ -30,7 +37,7 @@ MonoBehaviour:
   - type: 0
     scoreAmount: 0
     runePool:
-    - {fileID: 11400000, guid: 159c9eec0bb4d094ca4906955fca7d7c, type: 2}
+    - {fileID: 11400000, guid: 704420b89e59f494a8edfb6880950f23, type: 2}
     - {fileID: 11400000, guid: 282fdf80b2032ab4dae8f709a057b0de, type: 2}
     - {fileID: 11400000, guid: 3f23dbccd1985cb41bf38961acfdbef1, type: 2}
     - {fileID: 11400000, guid: 62297c6bc8868224193f7cbdde99e1e0, type: 2}
@@ -39,8 +46,8 @@ MonoBehaviour:
     - {fileID: 11400000, guid: cbbec1bdd022da24aa5ea35d79e3ae6a, type: 2}
     - {fileID: 11400000, guid: 69134ea6b04348149bade72592a03fc8, type: 2}
     - {fileID: 11400000, guid: 983ce9ae9bbdc1e459c16cbb592e9bfd, type: 2}
-    - {fileID: 11400000, guid: 43f70ab6b0c1ee4409905607b5395405, type: 2}
-    - {fileID: 11400000, guid: 9016636b05c1e5449a1fbc71768d8b19, type: 2}
+    - {fileID: 11400000, guid: 4151c267e405ab04e8f72fd6d2d4dd50, type: 2}
+    - {fileID: 11400000, guid: 0463dd8c96288e5439a050b0845d0180, type: 2}
     - {fileID: 11400000, guid: 2a1753b2d63502e45b1f546293fc02ab, type: 2}
     - {fileID: 11400000, guid: dd161f22b355ed7478d1d940227d01f9, type: 2}
     - {fileID: 11400000, guid: 97f1e41585808c24a8a0a2d74cdc4d31, type: 2}
