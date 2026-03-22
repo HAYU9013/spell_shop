@@ -76,6 +76,11 @@ public class GameFacade : MonoBehaviour
     /// </summary>
     public event Action<RewardResult> OnRewardGranted;
 
+    /// <summary>
+    /// 通知訊息（獎勵 / 懲罰 / 重要事件），供 NotificationUI 顯示浮動提示。
+    /// </summary>
+    public event Action<string> OnNotification;
+
     // =========================================================
     // 內部狀態
     // =========================================================
@@ -320,8 +325,8 @@ public class GameFacade : MonoBehaviour
         if (CustomerManager.Instance != null)
         {
             CustomerManager.Instance.OnCustomerArrived   += HandleCustomerArrived;
-            CustomerManager.Instance.OnCustomerSatisfied += HandleCustomerDeparted;
-            CustomerManager.Instance.OnCustomerLeft      += HandleCustomerDeparted;
+            CustomerManager.Instance.OnCustomerSatisfied += HandleCustomerSatisfied;
+            CustomerManager.Instance.OnCustomerLeft      += HandleCustomerLeft;
             CustomerManager.Instance.OnPatienceChanged   += HandlePatienceChanged;
             Debug.Log("[GameFacade] 已訂閱 CustomerManager 事件");
         }
@@ -370,8 +375,8 @@ public class GameFacade : MonoBehaviour
         if (CustomerManager.Instance != null)
         {
             CustomerManager.Instance.OnCustomerArrived   -= HandleCustomerArrived;
-            CustomerManager.Instance.OnCustomerSatisfied -= HandleCustomerDeparted;
-            CustomerManager.Instance.OnCustomerLeft      -= HandleCustomerDeparted;
+            CustomerManager.Instance.OnCustomerSatisfied -= HandleCustomerSatisfied;
+            CustomerManager.Instance.OnCustomerLeft      -= HandleCustomerLeft;
             CustomerManager.Instance.OnPatienceChanged   -= HandlePatienceChanged;
         }
 
@@ -443,10 +448,20 @@ public class GameFacade : MonoBehaviour
         OnCustomerChanged?.Invoke(BuildCustomerSnapshot(customer));
     }
 
-    private void HandleCustomerDeparted(CustomerInstance customer)
+    private void HandleCustomerSatisfied(CustomerInstance customer)
     {
-        // 顧客離開（滿足或憤怒），通知 UI 清空顧客面板
         OnCustomerChanged?.Invoke(new CustomerSnapshot { IsPresent = false });
+
+        if (customer?.Data != null)
+            OnNotification?.Invoke($"顧客 {customer.Data.customerName} 滿意離開！業績 +{customer.Data.scoreReward}");
+    }
+
+    private void HandleCustomerLeft(CustomerInstance customer)
+    {
+        OnCustomerChanged?.Invoke(new CustomerSnapshot { IsPresent = false });
+
+        if (customer?.Data != null)
+            OnNotification?.Invoke($"顧客 {customer.Data.customerName} 憤怒離開！業績 -{customer.Data.scorePenalty}");
     }
 
     private void HandlePatienceChanged(CustomerInstance customer)
@@ -463,6 +478,18 @@ public class GameFacade : MonoBehaviour
     {
         // 懲罰觸發同樣更新遺物面板（計數、狀態可能改變）
         OnRelicsChanged?.Invoke(BuildRelicSnapshots());
+
+        // 通知懲罰訊息
+        string punishText;
+        switch (result.PunishmentType)
+        {
+            case RelicPunishment.PlayerDeath:      punishText = "即死懲罰！Game Over"; break;
+            case RelicPunishment.ScoreReset:        punishText = "業績歸零！"; break;
+            case RelicPunishment.DiscardSelf:       punishText = $"失去遺物 {relic.Data.relicName}！"; break;
+            case RelicPunishment.EnvironmentShock:  punishText = $"環境衝擊！{AttrName(result.ShockAttribute)} 劇變"; break;
+            default:                                punishText = "未知懲罰"; break;
+        }
+        OnNotification?.Invoke($"{relic.Data.relicName} 觸發懲罰：{punishText}");
     }
 
     private void HandlePhaseChanged(TurnManager.TurnPhase phase)
@@ -489,6 +516,21 @@ public class GameFacade : MonoBehaviour
     private void HandleRewardGranted(RewardResult result)
     {
         OnRewardGranted?.Invoke(result);
+
+        if (result.HasAnyReward)
+        {
+            // 組裝獎勵明細文字
+            var parts = new List<string>();
+            if (result.ScoreGranted != 0)
+                parts.Add($"業績 {Sign(result.ScoreGranted)}{result.ScoreGranted}");
+            foreach (var rune in result.RunesGranted)
+                parts.Add($"獲得符文 {rune.runeName}");
+            foreach (var scroll in result.ScrollsGranted)
+                parts.Add($"獲得卷軸 {scroll.scrollName}");
+
+            string detail = string.Join("、", parts);
+            OnNotification?.Invoke($"來自 {result.SourceName}：{detail}");
+        }
     }
 
     // =========================================================
