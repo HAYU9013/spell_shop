@@ -40,6 +40,9 @@ public class CustomerManager : MonoBehaviour
     /// <summary>顧客耐心耗盡憤怒離開後觸發</summary>
     public event System.Action<CustomerInstance> OnCustomerLeft;
 
+    /// <summary>顧客耐心扣除後觸發（未耗盡時）</summary>
+    public event System.Action<CustomerInstance> OnPatienceChanged;
+
     /// <summary>關卡模式隊列清空時觸發（通關）</summary>
     public event System.Action OnQueueEmpty;
 
@@ -187,6 +190,10 @@ public class CustomerManager : MonoBehaviour
             _currentCustomer = null;
 
             CheckQueueEmptyAfterDismiss();
+        }
+        else
+        {
+            OnPatienceChanged?.Invoke(_currentCustomer);
         }
     }
 

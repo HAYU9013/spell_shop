@@ -15,10 +15,10 @@ public class EnvironmentData
     public const int MAX_VALUE = 20;
 
     // ----- 初始值 -----
-    public const int INITIAL_BRIGHTNESS   = 5;
-    public const int INITIAL_MOISTURE     = 5;
-    public const int INITIAL_TEMPERATURE  = 5;
-    public const int INITIAL_SCORE        = 30;
+    public const int INITIAL_BRIGHTNESS = 5;
+    public const int INITIAL_MOISTURE = 5;
+    public const int INITIAL_TEMPERATURE = 5;
+    public const int INITIAL_SCORE = 0;
 
     // ----- 環境屬性 -----
     [Range(MIN_VALUE, MAX_VALUE)] public int brightness;
@@ -34,10 +34,10 @@ public class EnvironmentData
 
     public EnvironmentData()
     {
-        brightness   = INITIAL_BRIGHTNESS;
-        moisture     = INITIAL_MOISTURE;
-        temperature  = INITIAL_TEMPERATURE;
-        score        = INITIAL_SCORE;
+        brightness = INITIAL_BRIGHTNESS;
+        moisture = INITIAL_MOISTURE;
+        temperature = INITIAL_TEMPERATURE;
+        score = INITIAL_SCORE;
     }
 
     // =========================================================
@@ -49,8 +49,8 @@ public class EnvironmentData
     {
         switch (attr)
         {
-            case EnvAttribute.Brightness:  return brightness;
-            case EnvAttribute.Moisture:    return moisture;
+            case EnvAttribute.Brightness: return brightness;
+            case EnvAttribute.Moisture: return moisture;
             case EnvAttribute.Temperature: return temperature;
             default:
                 Debug.LogWarning($"[EnvironmentData] GetValue: unknown attribute {attr}");
@@ -69,9 +69,9 @@ public class EnvironmentData
 
         switch (attr)
         {
-            case EnvAttribute.Brightness:  brightness   = clamped; break;
-            case EnvAttribute.Moisture:    moisture     = clamped; break;
-            case EnvAttribute.Temperature: temperature  = clamped; break;
+            case EnvAttribute.Brightness: brightness = clamped; break;
+            case EnvAttribute.Moisture: moisture = clamped; break;
+            case EnvAttribute.Temperature: temperature = clamped; break;
             default:
                 Debug.LogWarning($"[EnvironmentData] SetValue: unknown attribute {attr}");
                 break;
@@ -105,10 +105,10 @@ public class EnvironmentData
     {
         return new EnvironmentData
         {
-            brightness  = this.brightness,
-            moisture    = this.moisture,
+            brightness = this.brightness,
+            moisture = this.moisture,
             temperature = this.temperature,
-            score       = this.score
+            score = this.score
         };
     }
 
@@ -117,9 +117,9 @@ public class EnvironmentData
     {
         return new EnvironmentDelta
         {
-            brightnessDelta   = to.brightness   - from.brightness,
-            moistureDelta     = to.moisture     - from.moisture,
-            temperatureDelta  = to.temperature  - from.temperature
+            brightnessDelta = to.brightness - from.brightness,
+            moistureDelta = to.moisture - from.moisture,
+            temperatureDelta = to.temperature - from.temperature
         };
     }
 

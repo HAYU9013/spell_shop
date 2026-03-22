@@ -276,7 +276,7 @@ public class EnvironmentData
     public const int INITIAL_BRIGHTNESS = 5;
     public const int INITIAL_MOISTURE = 5;
     public const int INITIAL_TEMPERATURE = 5;
-    public const int INITIAL_SCORE = 30;
+    public const int INITIAL_SCORE = 0;
 
     [Range(MIN_VALUE, MAX_VALUE)] public int brightness;
     [Range(MIN_VALUE, MAX_VALUE)] public int moisture;
@@ -1632,17 +1632,17 @@ WholesalerManager ──OnShopOpened──────────────�
 
 ## 11. 設計模式總覽
 
-| 設計模式                | 應用位置                                        | 目的                                             |
-| ----------------------- | ----------------------------------------------- | ------------------------------------------------ |
-| Singleton               | GameManager                                     | 唯一入口，協調全部子系統                         |
-| Strategy (策略)         | IRequirement, IScrollModifier, ISpecialEffect   | 需求判定、卷軸修飾、特殊效果封裝為可替換策略     |
-| Factory (工廠)          | RequirementFactory, ScrollModifierFactory, SpecialEffectFactory | 根據資料建立對應策略實例       |
-| Observer (觀察者)       | GameEventChannel, C# event                      | 解耦系統間通訊                                   |
-| Data-Driven (資料驅動)  | ScriptableObject (各種 Data)                    | 符文、卷軸、顧客、遺物等資料與程式碼分離         |
-| Object Pool (物件池)    | ObjectPool\<T\>                                 | 重複使用 UI 元件，減少 GC 壓力                   |
-| State Machine (狀態機)  | TurnManager (TurnPhase)                         | 管理回合的八個階段順序與轉換                     |
-| MVC                     | Manager(C) + Data(M) + Panel(V)                 | 資料、邏輯、顯示三層分離                         |
-| Context Object          | RequirementContext                              | 封裝需求判定所需的完整上下文                     |
+| 設計模式               | 應用位置                                                        | 目的                                         |
+| ---------------------- | --------------------------------------------------------------- | -------------------------------------------- |
+| Singleton              | GameManager                                                     | 唯一入口，協調全部子系統                     |
+| Strategy (策略)        | IRequirement, IScrollModifier, ISpecialEffect                   | 需求判定、卷軸修飾、特殊效果封裝為可替換策略 |
+| Factory (工廠)         | RequirementFactory, ScrollModifierFactory, SpecialEffectFactory | 根據資料建立對應策略實例                     |
+| Observer (觀察者)      | GameEventChannel, C# event                                      | 解耦系統間通訊                               |
+| Data-Driven (資料驅動) | ScriptableObject (各種 Data)                                    | 符文、卷軸、顧客、遺物等資料與程式碼分離     |
+| Object Pool (物件池)   | ObjectPool\<T\>                                                 | 重複使用 UI 元件，減少 GC 壓力               |
+| State Machine (狀態機) | TurnManager (TurnPhase)                                         | 管理回合的八個階段順序與轉換                 |
+| MVC                    | Manager(C) + Data(M) + Panel(V)                                 | 資料、邏輯、顯示三層分離                     |
+| Context Object         | RequirementContext                                              | 封裝需求判定所需的完整上下文                 |
 
 ---
 
@@ -1650,63 +1650,63 @@ WholesalerManager ──OnShopOpened──────────────�
 
 ### Phase 1 — 核心機制原型
 
-| 優先序 | 類別                                          | 說明                         |
-| ------ | --------------------------------------------- | ---------------------------- |
-| 1      | `EnvironmentData`, `EnvAttribute`, `RuneEffect` | 環境數值基礎               |
-| 2      | `RuneData`, `RuneInstance`, `RuneType`        | 符文資料（含循環/消耗型）    |
-| 3      | `ScrollData`, `ScrollInstance`                | 卷軸資料                     |
-| 4      | `IScrollModifier` + `DirectAddModifier`       | 最基本的卷軸修飾             |
-| 5      | `ScrollProcessor`                             | 卷軸結算（不含連鎖）         |
-| 6      | `EnvironmentManager`                          | 環境管理                     |
-| 7      | `DeckManager`, `HandManager`                  | 牌庫（全棄重抽）與手牌       |
-| 8      | `ScrollInventory`                             | 卷軸庫存                     |
-| 9      | `IRequirement` + `AbsoluteRequirement`        | 最基本的需求判定             |
-| 10     | `CustomerData`, `CustomerInstance`            | 顧客資料                     |
-| 11     | `CustomerManager`                             | 顧客管理（單一顧客模式）     |
-| 12     | `TurnManager`                                 | 回合流程（一回合一卷軸）     |
-| 13     | `GameState`, `GameManager`, `GameConfig`      | 遊戲主框架                   |
-| 14     | UI 面板（基礎版）                              | 最小可玩 UI                  |
+| 優先序 | 類別                                            | 說明                      |
+| ------ | ----------------------------------------------- | ------------------------- |
+| 1      | `EnvironmentData`, `EnvAttribute`, `RuneEffect` | 環境數值基礎              |
+| 2      | `RuneData`, `RuneInstance`, `RuneType`          | 符文資料（含循環/消耗型） |
+| 3      | `ScrollData`, `ScrollInstance`                  | 卷軸資料                  |
+| 4      | `IScrollModifier` + `DirectAddModifier`         | 最基本的卷軸修飾          |
+| 5      | `ScrollProcessor`                               | 卷軸結算（不含連鎖）      |
+| 6      | `EnvironmentManager`                            | 環境管理                  |
+| 7      | `DeckManager`, `HandManager`                    | 牌庫（全棄重抽）與手牌    |
+| 8      | `ScrollInventory`                               | 卷軸庫存                  |
+| 9      | `IRequirement` + `AbsoluteRequirement`          | 最基本的需求判定          |
+| 10     | `CustomerData`, `CustomerInstance`              | 顧客資料                  |
+| 11     | `CustomerManager`                               | 顧客管理（單一顧客模式）  |
+| 12     | `TurnManager`                                   | 回合流程（一回合一卷軸）  |
+| 13     | `GameState`, `GameManager`, `GameConfig`        | 遊戲主框架                |
+| 14     | UI 面板（基礎版）                               | 最小可玩 UI               |
 
 ### Phase 2 — 遊戲循環完整化
 
-| 類別                                           | 說明                               |
-| ---------------------------------------------- | ---------------------------------- |
-| `RelicData`, `RelicInstance`, `RelicManager`   | 遺物系統（動態增減、排序、不重置） |
-| `ExtremeEventHandler`                          | 極端事件（一次性觸發）             |
-| `LevelManager`                                | 關卡管理（隊列制）                 |
-| `WholesalerManager`, `WholesalerConfig`        | 批發商系統（基礎版固定商品）       |
-| 顧客耐心、業績增減                              | 完整的分數循環                     |
+| 類別                                         | 說明                               |
+| -------------------------------------------- | ---------------------------------- |
+| `RelicData`, `RelicInstance`, `RelicManager` | 遺物系統（動態增減、排序、不重置） |
+| `ExtremeEventHandler`                        | 極端事件（一次性觸發）             |
+| `LevelManager`                               | 關卡管理（隊列制）                 |
+| `WholesalerManager`, `WholesalerConfig`      | 批發商系統（基礎版固定商品）       |
+| 顧客耐心、業績增減                           | 完整的分數循環                     |
 
 ### Phase 3 — 系統深度
 
-| 類別                                           | 說明                               |
-| ---------------------------------------------- | ---------------------------------- |
-| `TagChainCalculator`                           | 標籤連鎖加成                       |
-| `TagPreferenceRequirement`                     | 顧客標籤偏好需求                   |
-| 遺物標籤偏好效果                                | 遺物對標籤的反應                   |
+| 類別                                                | 說明                         |
+| --------------------------------------------------- | ---------------------------- |
+| `TagChainCalculator`                                | 標籤連鎖加成                 |
+| `TagPreferenceRequirement`                          | 顧客標籤偏好需求             |
+| 遺物標籤偏好效果                                    | 遺物對標籤的反應             |
 | `RelativeChangeRequirement`, `StabilityRequirement` | 完整需求類型                 |
-| `ISpecialEffect`, `RemoveRelicEffect`          | 消耗型符文特殊效果（驅逐石）       |
-| 其餘 `IScrollModifier` 實作                    | 完整卷軸修飾                       |
-| 批發商完整版（隨機商品池）                       | 完整批發商                         |
+| `ISpecialEffect`, `RemoveRelicEffect`               | 消耗型符文特殊效果（驅逐石） |
+| 其餘 `IScrollModifier` 實作                         | 完整卷軸修飾                 |
+| 批發商完整版（隨機商品池）                          | 完整批發商                   |
 
 ### Phase 4 — 內容擴充
 
-| 內容                  | 數量          |
-| --------------------- | ------------- |
-| 符文                  | 25+ 種        |
-| 卷軸                  | 12+ 種        |
-| 遺物                  | 12+ 種        |
-| 顧客類型              | 15+ 種        |
-| 極端事件完整效果       | 4 種          |
+| 內容             | 數量   |
+| ---------------- | ------ |
+| 符文             | 25+ 種 |
+| 卷軸             | 12+ 種 |
+| 遺物             | 12+ 種 |
+| 顧客類型         | 15+ 種 |
+| 極端事件完整效果 | 4 種   |
 
 ### Phase 5 — 打磨與平衡
 
-| 項目           |
-| -------------- |
-| 難度曲線調整   |
-| UI 美術        |
-| 音效與演出     |
-| 分數排行榜     |
+| 項目         |
+| ------------ |
+| 難度曲線調整 |
+| UI 美術      |
+| 音效與演出   |
+| 分數排行榜   |
 
 ---
 

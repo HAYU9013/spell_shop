@@ -80,7 +80,11 @@ public class EnvironmentManager : MonoBehaviour
     public int Moisture => _env.moisture;
     public int Temperature => _env.temperature;
     public int Score => _env.score;
-    public bool IsScoreZero => _env.score <= 0;
+
+    /// <summary>業績是否曾經增加過（用於判斷破產條件：曾有收入再歸零才算破產）</summary>
+    private bool _hasEarnedScore;
+
+    public bool IsScoreZero => _hasEarnedScore && _env.score <= 0;
 
     public int GetValue(EnvAttribute attr) => _env.GetValue(attr);
 
@@ -196,6 +200,7 @@ public class EnvironmentManager : MonoBehaviour
     public void ModifyScore(int delta)
     {
         _env.ModifyScore(delta);
+        if (delta > 0) _hasEarnedScore = true;
         OnScoreChanged?.Invoke(_env.score);
     }
 
@@ -276,6 +281,7 @@ public class EnvironmentManager : MonoBehaviour
     {
         _env = new EnvironmentData();
         _history.Clear();
+        _hasEarnedScore = false;
         OnValueChanged?.Invoke(EnvAttribute.Brightness, _env.brightness);
         OnValueChanged?.Invoke(EnvAttribute.Moisture, _env.moisture);
         OnValueChanged?.Invoke(EnvAttribute.Temperature, _env.temperature);

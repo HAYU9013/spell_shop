@@ -221,6 +221,9 @@ public class WorkbenchManager : MonoBehaviour
 
         Debug.Log($"[WorkbenchManager] 送出：{record}");
 
+        // 送出後：棄掉剩餘手牌再補牌（棄牌堆此時已有剛送出的符文，確保洗牌可正常運作）
+        DeckManager.Instance?.DiscardHandAndDraw();
+
         // 解除 Phase 4 阻塞
         _turnManager?.PlayerSubmit();
     }
