@@ -523,8 +523,9 @@ public class GameFacade : MonoBehaviour
             .Select(relic => new RelicSnapshot
             {
                 RelicName             = relic.Data.relicName,
+                Description           = relic.Data.description,
                 Icon                  = relic.Data.icon,
-                IsSatisfied           = relic.Data.satisfiedCondition.Evaluate(env),
+                IsSatisfied           = relic.Data.EvaluateAll(env),
                 DissatisfiedCount     = relic.UnsatisfiedCount,
                 DissatisfiedLimit     = relic.Data.unsatisfiedLimit,
                 SatisfiedEffectText   = BuildEffectText(relic.Data.satisfiedEnvEffects, relic.Data.satisfiedScoreChange),

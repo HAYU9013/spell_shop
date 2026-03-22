@@ -88,7 +88,7 @@ public class RelicInstance
     /// </summary>
     public RelicTickResult Tick(EnvironmentData env)
     {
-        bool satisfied = Data.satisfiedCondition.Evaluate(env);
+        bool satisfied = Data.EvaluateAll(env);
 
         if (satisfied)
         {

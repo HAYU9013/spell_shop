@@ -130,6 +130,9 @@ public class RelicUI : MonoBehaviour
         SetText(card, "EffectText", effectText);
 
         SetIcon(card, "Image", data.Icon);
+
+        var trigger = card.GetComponent<HoverTooltipTrigger>() ?? card.AddComponent<HoverTooltipTrigger>();
+        trigger.Setup(data.RelicName, data.Description);
     }
 
     private void SetText(GameObject root, string childName, string value)

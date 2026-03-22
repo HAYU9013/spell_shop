@@ -76,6 +76,14 @@ public enum RequirementType
     TagPreference   // 標籤偏好條件：送出卷軸中指定標籤符文達數量
 }
 
+// ----- 遺物條件邏輯 -----
+
+public enum ConditionLogic
+{
+    And, // 所有條件皆需成立
+    Or   // 任一條件成立即可
+}
+
 // ----- 遺物懲罰類型 -----
 
 public enum RelicPunishment

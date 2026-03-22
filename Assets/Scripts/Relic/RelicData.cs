@@ -101,7 +101,29 @@ public class RelicData : ScriptableObject
     // =========================================================
 
     [Header("滿意條件")]
-    public RelicCondition satisfiedCondition;
+    public List<RelicCondition> satisfiedConditions = new List<RelicCondition>();
+
+    [Tooltip("多條件時的判定邏輯：And = 全部成立；Or = 任一成立")]
+    public ConditionLogic conditionLogic = ConditionLogic.And;
+
+    /// <summary>根據當前環境判斷所有條件是否成立</summary>
+    public bool EvaluateAll(EnvironmentData env)
+    {
+        if (satisfiedConditions == null || satisfiedConditions.Count == 0) return false;
+
+        if (conditionLogic == ConditionLogic.And)
+        {
+            foreach (var c in satisfiedConditions)
+                if (!c.Evaluate(env)) return false;
+            return true;
+        }
+        else // Or
+        {
+            foreach (var c in satisfiedConditions)
+                if (c.Evaluate(env)) return true;
+            return false;
+        }
+    }
 
     // =========================================================
     // 滿意效果（每回合，條件成立時套用）

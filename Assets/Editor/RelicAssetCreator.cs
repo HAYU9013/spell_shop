@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using System.Collections.Generic;
 
 /// <summary>
 /// 編輯器工具：一鍵建立 Todolist 中定義的 2 個基礎遺物 ScriptableObject 資產。
@@ -38,12 +39,16 @@ public static class RelicAssetCreator
             sundial.description  = "古老的日晷，感知光線的存在。\n亮度充足時每回合提供光能，亮度不足時則吸走光能。";
             sundial.displayOrder = 0;
 
-            sundial.satisfiedCondition = new RelicCondition
+            sundial.satisfiedConditions = new List<RelicCondition>
             {
-                attribute   = EnvAttribute.Brightness,
-                compareOp   = CompareOperator.GreaterEqual,
-                targetValue = 7
+                new RelicCondition
+                {
+                    attribute   = EnvAttribute.Brightness,
+                    compareOp   = CompareOperator.GreaterEqual,
+                    targetValue = 7
+                }
             };
+            sundial.conditionLogic = ConditionLogic.And;
 
             sundial.satisfiedEnvEffects = new RuneEffect[]
             {
@@ -74,13 +79,17 @@ public static class RelicAssetCreator
             mossStone.description  = "覆滿苔蘚的魔法石，在濕度適中的環境中緩慢釋放能量。\n水分失衡時將強制吸收大量水分。";
             mossStone.displayOrder = 1;
 
-            mossStone.satisfiedCondition = new RelicCondition
+            mossStone.satisfiedConditions = new List<RelicCondition>
             {
-                attribute  = EnvAttribute.Moisture,
-                compareOp  = CompareOperator.InRange,
-                rangeMin   = 4,
-                rangeMax   = 8
+                new RelicCondition
+                {
+                    attribute  = EnvAttribute.Moisture,
+                    compareOp  = CompareOperator.InRange,
+                    rangeMin   = 4,
+                    rangeMax   = 8
+                }
             };
+            mossStone.conditionLogic = ConditionLogic.And;
 
             mossStone.satisfiedEnvEffects    = new RuneEffect[0]; // 無環境效果
             mossStone.satisfiedScoreChange   = 5;                 // 業績 +5

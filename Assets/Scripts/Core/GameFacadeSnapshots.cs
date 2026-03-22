@@ -89,6 +89,7 @@ public struct CustomerSnapshot
 public struct RelicSnapshot
 {
     public string RelicName;
+    public string Description;
     public Sprite Icon;
 
     /// <summary>依當前環境即時計算的滿意狀態</summary>
