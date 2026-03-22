@@ -93,6 +93,17 @@ public enum RelicPunishment
     PlayerDeath       // Game Over
 }
 
+// ----- 環境屬性遮罩（Flags，供卷軸封鎖特定屬性用） -----
+
+[Flags]
+public enum EnvAttributeMask
+{
+    None        = 0,
+    Brightness  = 1 << 0, // 亮度
+    Moisture    = 1 << 1, // 水分
+    Temperature = 1 << 2  // 溫度
+}
+
 // ----- 卷軸修飾規則 -----
 
 public enum ScrollModifierType
@@ -117,7 +128,8 @@ public enum GameMode
 
 public enum RewardType
 {
-    RandomRune,   // 隨機符文（依稀有度權重）
+    RandomRune,   // 隨機符文（從 runePool 不重複抽取）
+    SpecificRune, // 指定符文（給予 specificRune × runeCount 張，允許重複）
     RandomScroll, // 隨機卷軸
     Relic,        // 遺物（玩家可選擇接受或拒絕）
     Score         // 業績加成

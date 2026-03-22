@@ -39,6 +39,12 @@ public class RelicTickResult
     /// 不滿意時此欄位為 null。
     /// </summary>
     public System.Collections.Generic.List<RewardEntry> SatisfiedRewards;
+
+    /// <summary>
+    /// 懲罰觸發時附加給予的符文清單（與主懲罰類型並用）。
+    /// PunishmentTriggered = false 時此欄位無效。
+    /// </summary>
+    public System.Collections.Generic.List<RewardEntry> PunishmentRunes;
 }
 
 // =========================================================
@@ -117,7 +123,8 @@ public class RelicInstance
                 PunishmentType      = Data.punishmentType,
                 ShockAttribute      = Data.shockAttribute,
                 ShockValue          = Data.shockValue,
-                ShockIsForceSet     = Data.shockIsForceSet
+                ShockIsForceSet     = Data.shockIsForceSet,
+                PunishmentRunes     = punishment ? Data.punishmentRunes : null
             };
         }
     }

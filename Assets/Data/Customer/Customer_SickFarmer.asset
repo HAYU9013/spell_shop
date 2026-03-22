@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 559c063922447c54d96bddbeedbdcf51, type: 3}
+  m_Name: Customer_SickFarmer
+  m_EditorClassIdentifier: 
+  customerName: "\u611F\u5192\u8FB2\u592B"
+  flavorText: "\u9F3B\u6C34\u76F4\u6D41\uFF0C\u9700\u8981\u4E7E\u71E5\u7684\u7A7A\u6C23\u8B93\u4ED6\u597D\u904E\u4E00\u9EDE\u3002"
+  portrait: {fileID: 0}
+  requirements:
+  - type: 1
+    attribute: 1
+    compareOp: 0
+    targetValue: 0
+    targetValueMax: 0
+    requiredDelta: -3
+    stabilityTurns: 1
+  maxPatience: 3
+  scoreReward: 8
+  scorePenalty: 4
+  bonusRewards: []

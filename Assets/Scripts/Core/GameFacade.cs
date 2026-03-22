@@ -555,18 +555,41 @@ public class GameFacade : MonoBehaviour
 
     private static string BuildPunishmentText(RelicData data)
     {
+        string main;
         switch (data.punishmentType)
         {
             case RelicPunishment.PlayerDeath:
-                return "Game Over";
+                main = "Game Over";
+                break;
             case RelicPunishment.ScoreReset:
-                return "業績歸零";
+                main = "業績歸零";
+                break;
             case RelicPunishment.EnvironmentShock:
                 string prefix = data.shockIsForceSet ? "設為 " : Sign(data.shockValue);
-                return $"{AttrName(data.shockAttribute)} {prefix}{data.shockValue}";
+                main = $"{AttrName(data.shockAttribute)} {prefix}{data.shockValue}";
+                break;
             default:
-                return "未知懲罰";
+                main = "未知懲罰";
+                break;
         }
+
+        // 附加符文懲罰
+        if (data.punishmentRunes != null && data.punishmentRunes.Count > 0)
+        {
+            var parts = new List<string>();
+            foreach (var entry in data.punishmentRunes)
+            {
+                if (entry == null) continue;
+                if (entry.type == RewardType.SpecificRune && entry.specificRune != null)
+                    parts.Add($"{entry.specificRune.runeName} ×{entry.runeCount}");
+                else if (entry.type == RewardType.RandomRune)
+                    parts.Add($"隨機符文 ×{entry.runeCount}");
+            }
+            if (parts.Count > 0)
+                main += $" + 給予 {string.Join("、", parts)}";
+        }
+
+        return main;
     }
 
     private static string AttrName(EnvAttribute attr)

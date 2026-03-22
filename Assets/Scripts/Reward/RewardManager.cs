@@ -95,6 +95,10 @@ public static class RewardManager
                     GrantRunes(entry, result);
                     break;
 
+                case RewardType.SpecificRune:
+                    GrantSpecificRune(entry, result);
+                    break;
+
                 case RewardType.RandomScroll:
                     GrantScrolls(entry, result);
                     break;
@@ -147,6 +151,22 @@ public static class RewardManager
             result.RunesGranted.Add(rune);
             Debug.Log($"[RewardManager] 符文獎勵：{rune.runeName}");
         }
+    }
+
+    private static void GrantSpecificRune(RewardEntry entry, RewardResult result)
+    {
+        if (entry.specificRune == null)
+        {
+            Debug.LogWarning("[RewardManager] SpecificRune：specificRune 未設定，跳過");
+            return;
+        }
+
+        for (int i = 0; i < entry.runeCount; i++)
+        {
+            DeckManager.Instance?.AddRune(entry.specificRune);
+            result.RunesGranted.Add(entry.specificRune);
+        }
+        Debug.Log($"[RewardManager] 指定符文：{entry.specificRune.runeName} ×{entry.runeCount}");
     }
 
     private static void GrantScrolls(RewardEntry entry, RewardResult result)

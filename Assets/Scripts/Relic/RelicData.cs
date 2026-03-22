@@ -171,4 +171,8 @@ public class RelicData : ScriptableObject
 
     [Tooltip("true = 強制設定為 shockValue；false = 對當前值套用 shockValue 作為 delta")]
     public bool shockIsForceSet = false;
+
+    [Header("懲罰：附加給予符文")]
+    [Tooltip("懲罰觸發時額外給予玩家的符文（使用 SpecificRune 類型填寫）。\n可與任何懲罰類型並用，例如 PlayerDeath + 枯萎 ×2。")]
+    public List<RewardEntry> punishmentRunes = new List<RewardEntry>();
 }

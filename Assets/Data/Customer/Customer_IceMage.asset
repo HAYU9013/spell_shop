@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 559c063922447c54d96bddbeedbdcf51, type: 3}
+  m_Name: Customer_IceMage
+  m_EditorClassIdentifier: 
+  customerName: "\u51B0\u9B54\u6CD5\u5E2B"
+  flavorText: "\u4F86\u81EA\u51B0\u539F\uFF0C\u5C0D\u9AD8\u6EAB\u6975\u5EA6\u4E0D\u9069\u3002\u9700\u8981\u5BD2\u51B7\u4E14\u660E\u4EAE\u7684\u74B0\u5883\u65BD\u5C55\u9B54\u6CD5\u3002"
+  portrait: {fileID: 0}
+  requirements:
+  - type: 0
+    attribute: 2
+    compareOp: 1
+    targetValue: 2
+    targetValueMax: 0
+    requiredDelta: 0
+    stabilityTurns: 1
+  - type: 0
+    attribute: 0
+    compareOp: 0
+    targetValue: 5
+    targetValueMax: 0
+    requiredDelta: 0
+    stabilityTurns: 1
+  maxPatience: 4
+  scoreReward: 15
+  scorePenalty: 6
+  bonusRewards: []

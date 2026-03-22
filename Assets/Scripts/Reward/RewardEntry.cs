@@ -33,13 +33,17 @@ public class RewardEntry
     // RandomRune
     // =========================================================
 
-    [Header("Rune 設定")]
-    [Tooltip("符文獎勵池（從中隨機選取，不重複）")]
+    [Header("Rune 設定（RandomRune）")]
+    [Tooltip("符文獎勵池（RandomRune：從中隨機選取，不重複）")]
     public RuneData[] runePool;
 
-    [Tooltip("給予符文張數（不超過池的大小）")]
+    [Tooltip("給予符文張數（RandomRune：不超過池的大小；SpecificRune：允許重複給予）")]
     [Range(1, 5)]
     public int runeCount = 1;
+
+    [Header("Rune 設定（SpecificRune）")]
+    [Tooltip("指定要給予的符文（SpecificRune 使用），給予 runeCount 張，允許重複")]
+    public RuneData specificRune;
 
     // =========================================================
     // RandomScroll

@@ -16,12 +16,18 @@ MonoBehaviour:
   description: 
   icon: {fileID: 21300000, guid: 4b72839572ba45a4e8a710805f5ff095, type: 3}
   displayOrder: 0
-  satisfiedCondition:
-    attribute: 2
+  satisfiedConditions:
+  - attribute: 0
     compareOp: 0
     targetValue: 2
     rangeMin: 0
     rangeMax: 0
+  - attribute: 1
+    compareOp: 3
+    targetValue: 0
+    rangeMin: 10
+    rangeMax: 20
+  conditionLogic: 0
   satisfiedEnvEffects: []
   satisfiedScoreChange: 0
   satisfiedRewards: []

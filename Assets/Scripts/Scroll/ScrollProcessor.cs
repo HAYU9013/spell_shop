@@ -63,6 +63,8 @@ public static class ScrollProcessor
                 break;
         }
 
+        result = ApplyAttributeBlock(result, scroll.blockedAttributes);
+
         LogResult(record, result);
         return result;
     }
@@ -184,6 +186,28 @@ public static class ScrollProcessor
                 results.Add(new RuneEffect { attribute = kvp.Key, value = intVal });
         }
         return results;
+    }
+
+    // =========================================================
+    // 屬性封鎖過濾
+    // =========================================================
+
+    /// <summary>移除結果中被 blockedAttributes 封鎖的屬性效果</summary>
+    private static List<RuneEffect> ApplyAttributeBlock(List<RuneEffect> effects, EnvAttributeMask blocked)
+    {
+        if (blocked == EnvAttributeMask.None) return effects;
+        return effects.FindAll(e => !IsBlocked(e.attribute, blocked));
+    }
+
+    private static bool IsBlocked(EnvAttribute attr, EnvAttributeMask mask)
+    {
+        switch (attr)
+        {
+            case EnvAttribute.Brightness:  return (mask & EnvAttributeMask.Brightness)  != 0;
+            case EnvAttribute.Moisture:    return (mask & EnvAttributeMask.Moisture)    != 0;
+            case EnvAttribute.Temperature: return (mask & EnvAttributeMask.Temperature) != 0;
+            default: return false;
+        }
     }
 
     // =========================================================

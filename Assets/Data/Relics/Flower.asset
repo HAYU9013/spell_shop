@@ -16,12 +16,18 @@ MonoBehaviour:
   description: 
   icon: {fileID: 0}
   displayOrder: 0
-  satisfiedCondition:
-    attribute: 0
+  satisfiedConditions:
+  - attribute: 1
     compareOp: 0
-    targetValue: 0
+    targetValue: 3
     rangeMin: 0
     rangeMax: 0
+  - attribute: 0
+    compareOp: 3
+    targetValue: 0
+    rangeMin: 10
+    rangeMax: 15
+  conditionLogic: 0
   satisfiedEnvEffects: []
   satisfiedScoreChange: 0
   satisfiedRewards: []

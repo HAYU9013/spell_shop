@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find C:codingsideProjectspell_shopspell_shopAssetsDataScroll -type f -name *.asset)"
+    ]
+  }
+}

@@ -50,6 +50,9 @@ public class ScrollData : ScriptableObject
     [Tooltip("標籤篩選（TagMultiply 時：只有符合此標籤的符文效果乘以倍率）")]
     public RuneTag tagFilter = RuneTag.None;
 
+    [Tooltip("封鎖屬性：勾選的環境屬性本回合完全不受符文與卷軸影響（疊加於修飾規則之上）")]
+    public EnvAttributeMask blockedAttributes = EnvAttributeMask.None;
+
     // =========================================================
     // 工具
     // =========================================================
@@ -57,22 +60,33 @@ public class ScrollData : ScriptableObject
     /// <summary>回傳修飾規則的簡短說明文字（供 UI 顯示）</summary>
     public string GetModifierDescription()
     {
+        string modifier;
         switch (modifierType)
         {
-            case ScrollModifierType.DirectAdd:
-                return $"槽位 ×{slotCount}，效果直接加總";
-            case ScrollModifierType.MultiplyAll:
-                return $"槽位 ×{slotCount}，所有效果 ×{multiplier}";
-            case ScrollModifierType.PositiveOnly:
-                return $"槽位 ×{slotCount}，僅計算正值效果";
-            case ScrollModifierType.TagMultiply:
-                return $"槽位 ×{slotCount}，{tagFilter} 標籤效果 ×{multiplier}";
-            case ScrollModifierType.Average:
-                return $"槽位 ×{slotCount}，效果取平均值";
-            case ScrollModifierType.Invert:
-                return $"槽位 ×{slotCount}，效果正負反轉";
-            default:
-                return $"槽位 ×{slotCount}";
+            case ScrollModifierType.DirectAdd:    modifier = $"槽位 ×{slotCount}，效果直接加總"; break;
+            case ScrollModifierType.MultiplyAll:  modifier = $"槽位 ×{slotCount}，所有效果 ×{multiplier}"; break;
+            case ScrollModifierType.PositiveOnly: modifier = $"槽位 ×{slotCount}，僅計算正值效果"; break;
+            case ScrollModifierType.TagMultiply:  modifier = $"槽位 ×{slotCount}，{tagFilter} 標籤效果 ×{multiplier}"; break;
+            case ScrollModifierType.Average:      modifier = $"槽位 ×{slotCount}，效果取平均值"; break;
+            case ScrollModifierType.Invert:       modifier = $"槽位 ×{slotCount}，效果正負反轉"; break;
+            default:                              modifier = $"槽位 ×{slotCount}"; break;
         }
+
+        if (blockedAttributes == EnvAttributeMask.None)
+            return modifier;
+
+        return $"{modifier}；封鎖：{GetBlockedDescription()}";
+    }
+
+    /// <summary>回傳封鎖屬性的中文說明（供 UI 顯示）</summary>
+    public string GetBlockedDescription()
+    {
+        if (blockedAttributes == EnvAttributeMask.None) return "無";
+
+        var parts = new System.Collections.Generic.List<string>();
+        if ((blockedAttributes & EnvAttributeMask.Brightness)  != 0) parts.Add("亮度");
+        if ((blockedAttributes & EnvAttributeMask.Moisture)    != 0) parts.Add("水分");
+        if ((blockedAttributes & EnvAttributeMask.Temperature) != 0) parts.Add("溫度");
+        return string.Join("、", parts);
     }
 }

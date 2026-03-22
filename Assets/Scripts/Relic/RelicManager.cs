@@ -177,7 +177,8 @@ public class RelicManager : MonoBehaviour
                     PunishmentType      = relic.Data.punishmentType,
                     ShockAttribute      = relic.Data.shockAttribute,
                     ShockValue          = relic.Data.shockValue,
-                    ShockIsForceSet     = relic.Data.shockIsForceSet
+                    ShockIsForceSet     = relic.Data.shockIsForceSet,
+                    PunishmentRunes     = relic.Data.punishmentRunes
                 };
                 ApplyPunishment(relic, punishResult);
                 OnPunishmentTriggered?.Invoke(relic, punishResult);
@@ -218,6 +219,10 @@ public class RelicManager : MonoBehaviour
                 // GameManager 透過訂閱 OnPunishmentTriggered 處理
                 break;
         }
+
+        // 附加符文懲罰（與主懲罰類型並用，例如 PlayerDeath + 枯萎 ×2）
+        if (result.PunishmentRunes != null && result.PunishmentRunes.Count > 0)
+            RewardManager.Grant(result.PunishmentRunes, relic.Data.relicName + "（懲罰）");
     }
 
     // =========================================================

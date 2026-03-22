@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5237a694ba1306408aa50900d5231da, type: 3}
+  m_Name: Rune_Glacier
+  m_EditorClassIdentifier: 
+  runeName: "\u51B0\u6CB3"
+  description: "\u51B0\u6CB3\u6D41\u52D5\uFF0C\u6EAB\u5EA6\u6025\u901F\u4E0B\u964D\u3002"
+  icon: {fileID: 0}
+  rarity: 0
+  runeType: 0
+  tags: 16
+  effects:
+  - attribute: 2
+    value: -3
+  discardOtherRunes: 0

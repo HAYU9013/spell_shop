@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5237a694ba1306408aa50900d5231da, type: 3}
+  m_Name: Rune_Erase
+  m_EditorClassIdentifier: 
+  runeName: "\u6D88\u9664"
+  description: "\u6D88\u9664\u5377\u8EF8\u4E0A\u7684\u4E00\u5F35\u8CBC\u7D19\u3002\n\u3010\u7279\u6B8A\u3011\u6548\u679C\u7531\u904A\u6232\u908F\u8F2F\u8655\u7406\u3002"
+  icon: {fileID: 0}
+  rarity: 1
+  runeType: 0
+  tags: 32
+  effects: []
+  discardOtherRunes: 0
