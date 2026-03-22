@@ -25,8 +25,12 @@ public class DrawCardsState : IGameState
     {
         Debug.Log("[Phase 3] DrawCards — Execute");
 
-        // 棄掉上回手牌，重新抽牌
-        DeckManager.Instance?.DiscardHandAndDraw();
+        var deck = DeckManager.Instance;
+        if (deck == null) yield break;
+
+        // 補牌時機為送出卷軸後，Phase 3 只在手牌為空時補牌（第一回合初始發牌）
+        if (deck.HandCount == 0)
+            deck.DrawHand(deck.DrawPerTurn);
 
         yield break;
     }

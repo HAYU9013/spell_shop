@@ -46,6 +46,9 @@ public class GameFacade : MonoBehaviour
     /// <summary>手牌更新（每回合重新抽牌後）</summary>
     public event Action<IReadOnlyList<RuneData>> OnHandUpdated;
 
+    /// <summary>抽牌堆或棄牌堆數量變動時觸發</summary>
+    public event Action<int /*drawPile*/, int /*discardPile*/> OnDeckCountChanged;
+
     /// <summary>顧客切換（新顧客到來或顧客離開）</summary>
     public event Action<CustomerSnapshot> OnCustomerChanged;
 
@@ -185,6 +188,12 @@ public class GameFacade : MonoBehaviour
             ? (IReadOnlyList<RuneData>)DeckManager.Instance.Hand.Select(r => r.Data).ToList()
             : new List<RuneData>();
 
+    /// <summary>抽牌堆剩餘數量（尚未抽到的符文）</summary>
+    public int DrawPileCount => DeckManager.Instance != null ? DeckManager.Instance.DrawPileCount : 0;
+
+    /// <summary>棄牌堆數量（已使用、等待洗牌的符文）</summary>
+    public int DiscardPileCount => DeckManager.Instance != null ? DeckManager.Instance.DiscardPileCount : 0;
+
     // =========================================================
     // Read API — 顧客
     // =========================================================
@@ -303,13 +312,17 @@ public class GameFacade : MonoBehaviour
             WorkbenchManager.Instance.OnWorkbenchChanged += HandleWorkbenchChanged;
 
         if (DeckManager.Instance != null)
+        {
             DeckManager.Instance.OnHandChanged += HandleHandChanged;
+            DeckManager.Instance.OnDeckChanged += HandleDeckChanged;
+        }
 
         if (CustomerManager.Instance != null)
         {
-            CustomerManager.Instance.OnCustomerArrived  += HandleCustomerArrived;
+            CustomerManager.Instance.OnCustomerArrived   += HandleCustomerArrived;
             CustomerManager.Instance.OnCustomerSatisfied += HandleCustomerDeparted;
-            CustomerManager.Instance.OnCustomerLeft     += HandleCustomerDeparted;
+            CustomerManager.Instance.OnCustomerLeft      += HandleCustomerDeparted;
+            CustomerManager.Instance.OnPatienceChanged   += HandlePatienceChanged;
             Debug.Log("[GameFacade] 已訂閱 CustomerManager 事件");
         }
         else
@@ -349,13 +362,17 @@ public class GameFacade : MonoBehaviour
             WorkbenchManager.Instance.OnWorkbenchChanged -= HandleWorkbenchChanged;
 
         if (DeckManager.Instance != null)
+        {
             DeckManager.Instance.OnHandChanged -= HandleHandChanged;
+            DeckManager.Instance.OnDeckChanged -= HandleDeckChanged;
+        }
 
         if (CustomerManager.Instance != null)
         {
-            CustomerManager.Instance.OnCustomerArrived  -= HandleCustomerArrived;
+            CustomerManager.Instance.OnCustomerArrived   -= HandleCustomerArrived;
             CustomerManager.Instance.OnCustomerSatisfied -= HandleCustomerDeparted;
-            CustomerManager.Instance.OnCustomerLeft     -= HandleCustomerDeparted;
+            CustomerManager.Instance.OnCustomerLeft      -= HandleCustomerDeparted;
+            CustomerManager.Instance.OnPatienceChanged   -= HandlePatienceChanged;
         }
 
         if (RelicManager.Instance != null)
@@ -415,6 +432,11 @@ public class GameFacade : MonoBehaviour
         OnHandUpdated?.Invoke(Hand);
     }
 
+    private void HandleDeckChanged()
+    {
+        OnDeckCountChanged?.Invoke(DrawPileCount, DiscardPileCount);
+    }
+
     private void HandleCustomerArrived(CustomerInstance customer)
     {
         Debug.Log($"[GameFacade] HandleCustomerArrived → {customer?.Data?.customerName}，subscribers={OnCustomerChanged?.GetInvocationList()?.Length ?? 0}");
@@ -425,6 +447,11 @@ public class GameFacade : MonoBehaviour
     {
         // 顧客離開（滿足或憤怒），通知 UI 清空顧客面板
         OnCustomerChanged?.Invoke(new CustomerSnapshot { IsPresent = false });
+    }
+
+    private void HandlePatienceChanged(CustomerInstance customer)
+    {
+        OnCustomerChanged?.Invoke(BuildCustomerSnapshot(customer));
     }
 
     private void HandleRelicChanged(RelicInstance _)
