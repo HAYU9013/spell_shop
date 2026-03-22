@@ -161,8 +161,8 @@ RectTransform:
   m_GameObject: {fileID: 6025027763093901189}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.8, y: 7.2000003, z: 4.8}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 5, y: 6, z: 4}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9169603051113444598}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
