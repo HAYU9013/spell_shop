@@ -5783,7 +5783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a3fccb26fa71a744b28f000c3986899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameMode: 0
+  _gameMode: 1
   _initialDeck:
   - {fileID: 11400000, guid: a93ea0f99b8a55a45a5492ae3445b9cf, type: 2}
   - {fileID: 11400000, guid: ff88fcae1ef662649bb0d5e86bcb7791, type: 2}
@@ -5795,16 +5795,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a22b081bc55a3e44da231114712d5804, type: 2}
   _initialRelics:
   - {fileID: 11400000, guid: 320448a9c4a9b884b9f58af87e891dc7, type: 2}
-  _levelQueue:
-  - {fileID: 11400000, guid: 281d91f9f6586f64b8c421572e0d42b1, type: 2}
-  - {fileID: 11400000, guid: e534842e6e98373418763f84e5a42503, type: 2}
+  _levelQueue: []
   _endlessPool:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: eed5e3f05246eb64e935e061f688b45c, type: 2}
+  - {fileID: 11400000, guid: 9a0108f807186bc4aad535043f8079c2, type: 2}
+  - {fileID: 11400000, guid: 281d91f9f6586f64b8c421572e0d42b1, type: 2}
+  - {fileID: 11400000, guid: 3f485089ec59fd647987202c7d64c534, type: 2}
+  - {fileID: 11400000, guid: dfbf353933d9fa3438207b6aae1dd66f, type: 2}
+  - {fileID: 11400000, guid: 890886395dcdd0043bdd58169cd0986e, type: 2}
+  - {fileID: 11400000, guid: 84ebd179038e1ee44a6604867f1aee86, type: 2}
+  - {fileID: 11400000, guid: 9159ccd713379124db70c1819d4cd507, type: 2}
   _turnManager: {fileID: 379831728}
 --- !u!1 &1876866585
 GameObject:
