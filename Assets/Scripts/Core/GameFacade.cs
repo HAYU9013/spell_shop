@@ -489,7 +489,7 @@ public class GameFacade : MonoBehaviour
             case RelicPunishment.EnvironmentShock:  punishText = $"環境衝擊！{AttrName(result.ShockAttribute)} 劇變"; break;
             default:                                punishText = "未知懲罰"; break;
         }
-        OnNotification?.Invoke($"{relic.Data.relicName} 觸發懲罰：{punishText}");
+        OnNotification?.Invoke($"{relic.Data.relicName} 觸發懲罰:{punishText}");
     }
 
     private void HandlePhaseChanged(TurnManager.TurnPhase phase)
@@ -529,7 +529,7 @@ public class GameFacade : MonoBehaviour
                 parts.Add($"獲得卷軸 {scroll.scrollName}");
 
             string detail = string.Join("、", parts);
-            OnNotification?.Invoke($"來自 {result.SourceName}：{detail}");
+            OnNotification?.Invoke($"來自 {result.SourceName}:{detail}");
         }
     }
 
