@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scrollName: ThreeSlot
   description: "\u4E09\u500B\u7E2B\u9699"
-  icon: {fileID: 21300000, guid: 5dff5ded945b4ea4abb5f1c8714dd654, type: 3}
+  icon: {fileID: 21300000, guid: 27da05e78a1898e49ab4851b40dcf2c3, type: 3}
   slotCount: 3
   modifierType: 0
   multiplier: 1
   tagFilter: 0
+  blockedAttributes: 0
