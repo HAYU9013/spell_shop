@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CustomerFish1
   m_EditorClassIdentifier: 
   customerName: "\u9B5A\u4E00\u865F"
-  flavorText: "\u597D\u4EAE,\u70BA\u751A\u9EBC\u6211\u90FD\u51FA\u9580\u4E86\u9084\u8981\u66EC\u592A\u967D?"
+  flavorText: "\u597D\u4EAE,\u70BA\u751A\u9EBC\u6211\u90FD\u51FA\u9580\u4E86\u9084\u8981\u6652\u592A\u967D?"
   portrait: {fileID: 21300000, guid: e90f89aedef814445864e6c38ef4626d, type: 3}
   requirements:
   - type: 1

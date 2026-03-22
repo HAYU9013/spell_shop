@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runeName: "\u711A\u98A8\u4E4B\u7B26\u6587"
   description: "\u5927\u5730\u5439\u8D77\u4E86\u61A4\u6012\u4E4B\u98A8\n\u6C34\u5206-2\n\u6EAB\u5EA6+2"
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: feeff94e2a4b463418914180d79e0155, type: 3}
   rarity: 2
   runeType: 0
   tags: 34
