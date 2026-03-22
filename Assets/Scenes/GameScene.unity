@@ -6179,11 +6179,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameMode: 1
   _initialDeck:
-  - {fileID: 11400000, guid: a93ea0f99b8a55a45a5492ae3445b9cf, type: 2}
   - {fileID: 11400000, guid: ff88fcae1ef662649bb0d5e86bcb7791, type: 2}
   - {fileID: 11400000, guid: a93ea0f99b8a55a45a5492ae3445b9cf, type: 2}
-  - {fileID: 11400000, guid: ff88fcae1ef662649bb0d5e86bcb7791, type: 2}
-  - {fileID: 11400000, guid: ff88fcae1ef662649bb0d5e86bcb7791, type: 2}
+  - {fileID: 11400000, guid: b61cc8256cc418043853385a3f18d24e, type: 2}
+  - {fileID: 11400000, guid: dc0829bddf8b9cc40b23de671e7adeda, type: 2}
+  - {fileID: 11400000, guid: dba9fb0dc6ae9254ca52057e3620a901, type: 2}
+  - {fileID: 11400000, guid: f9b20a421ae60264c931c437e121796a, type: 2}
+  - {fileID: 11400000, guid: 62297c6bc8868224193f7cbdde99e1e0, type: 2}
   _initialScrolls:
   - {fileID: 11400000, guid: eea4eab3afa3553479b35d49c19895e6, type: 2}
   - {fileID: 11400000, guid: a3cc7150df4d63d49b2a7f07e79bf6e8, type: 2}

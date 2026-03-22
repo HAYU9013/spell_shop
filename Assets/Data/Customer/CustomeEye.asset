@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CustomeEye
   m_EditorClassIdentifier: 
   customerName: "\u5927\u773C"
-  flavorText: "\u6211\u60F3\u8981\u71D2\u4E00\u4E9B...\u6771\u897F\uFF0C\u4F46\u6211\u4E0D\u60F3\u8981\u706B\u5149\u592A\u5927\u5F15\u4EBA\u6CE8\u610F\uFF0C\u600E\u9EBC\u505A"
+  flavorText: "\u6211\u60F3\u8981\u71D2\u4E00\u4E9B...\u6771\u897F,\u4F46\u6211\u4E0D\u60F3\u8981\u706B\u5149\u592A\u5927\u5F15\u4EBA\u6CE8\u610F,\u600E\u9EBC\u505A"
   portrait: {fileID: 21300000, guid: 825d4d2245447c94592cbf14f29a47f8, type: 3}
   requirements:
   - type: 1
