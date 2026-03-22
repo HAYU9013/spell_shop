@@ -18,19 +18,26 @@ MonoBehaviour:
   displayOrder: 0
   satisfiedConditions:
   - attribute: 1
-    compareOp: 0
+    compareOp: 2
     targetValue: 3
     rangeMin: 0
     rangeMax: 0
-  - attribute: 0
-    compareOp: 3
-    targetValue: 0
-    rangeMin: 10
-    rangeMax: 15
   conditionLogic: 0
   satisfiedEnvEffects: []
   satisfiedScoreChange: 0
-  satisfiedRewards: []
+  satisfiedRewards:
+  - type: 0
+    scoreAmount: 0
+    runePool:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
+    runeCount: 5
+    specificRune: {fileID: 0}
+    scrollPool: []
+    scrollCount: 0
   unsatisfiedEnvEffects: []
   unsatisfiedScoreChange: 0
   unsatisfiedLimit: 3
@@ -38,3 +45,4 @@ MonoBehaviour:
   shockAttribute: 0
   shockValue: -5
   shockIsForceSet: 0
+  punishmentRunes: []

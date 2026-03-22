@@ -105,6 +105,9 @@ public class RelicManager : MonoBehaviour
             return;
         }
 
+        // 蒐集本回合需要移除的遺物，迴圈結束後統一處理，避免迭代中修改集合
+        var toDiscard = new List<RelicInstance>();
+
         foreach (var relic in _relics)
         {
             // 取得當前環境快照供判定（Tick 結束後環境可能已變）
@@ -138,10 +141,17 @@ public class RelicManager : MonoBehaviour
                 Debug.Log($"[RelicManager] {relic.Data.relicName} 觸發懲罰：{result.PunishmentType}");
                 ApplyPunishment(relic, result);
                 OnPunishmentTriggered?.Invoke(relic, result);
+
+                if (result.PunishmentType == RelicPunishment.DiscardSelf)
+                    toDiscard.Add(relic);
             }
 
             Debug.Log($"[RelicManager] {relic}");
         }
+
+        // 統一移除 DiscardSelf 遺物
+        foreach (var relic in toDiscard)
+            DiscardRelic(relic);
     }
 
     // =========================================================
@@ -217,6 +227,11 @@ public class RelicManager : MonoBehaviour
             case RelicPunishment.PlayerDeath:
                 Debug.Log("[RelicManager] 即死懲罰觸發 → 通知 GameManager");
                 // GameManager 透過訂閱 OnPunishmentTriggered 處理
+                break;
+
+            case RelicPunishment.DiscardSelf:
+                Debug.Log($"[RelicManager] {relic.Data.relicName} 失去遺物懲罰 → 迴圈結束後移除");
+                // 實際移除由 TickAll() 的 toDiscard 清單統一執行，避免迭代中修改集合
                 break;
         }
 

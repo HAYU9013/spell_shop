@@ -90,7 +90,8 @@ public enum RelicPunishment
 {
     EnvironmentShock, // 環境劇烈波動（強制設定某屬性）
     ScoreReset,       // 業績清零
-    PlayerDeath       // Game Over
+    PlayerDeath,      // Game Over
+    DiscardSelf       // 失去此遺物（自動從遺物列表移除）
 }
 
 // ----- 環境屬性遮罩（Flags，供卷軸封鎖特定屬性用） -----

@@ -564,6 +564,9 @@ public class GameFacade : MonoBehaviour
             case RelicPunishment.ScoreReset:
                 main = "業績歸零";
                 break;
+            case RelicPunishment.DiscardSelf:
+                main = "失去此遺物";
+                break;
             case RelicPunishment.EnvironmentShock:
                 string prefix = data.shockIsForceSet ? "設為 " : Sign(data.shockValue);
                 main = $"{AttrName(data.shockAttribute)} {prefix}{data.shockValue}";

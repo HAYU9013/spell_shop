@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BrightHead
   m_EditorClassIdentifier: 
   customerName: "\u5149\u982D"
-  flavorText: "\u66974"
-  portrait: {fileID: 21300000, guid: aa925edbfe657ad45878f23253d22015, type: 3}
+  flavorText: "\u6697\u6697\u6697\u6697\u6697\u6697\u6697\u66974"
+  portrait: {fileID: 21300000, guid: e90f89aedef814445864e6c38ef4626d, type: 3}
   requirements:
   - type: 0
     attribute: 0
@@ -34,5 +34,6 @@ MonoBehaviour:
     - {fileID: 11400000, guid: b61cc8256cc418043853385a3f18d24e, type: 2}
     - {fileID: 11400000, guid: b61cc8256cc418043853385a3f18d24e, type: 2}
     runeCount: 2
+    specificRune: {fileID: 0}
     scrollPool: []
     scrollCount: 0
